@@ -14,7 +14,7 @@ import { SiteFooter } from '@/components/SiteFooter';
 import { SiteHeader } from '@/components/SiteHeader';
 import { ThemeScript } from '@/components/ThemeScript';
 import { siteConfig } from '@/content/site';
-import { SITE_URL } from '@/lib/constants';
+import { SITE_INDEXABLE, SITE_URL } from '@/lib/constants';
 import { PAGE_DESCRIPTIONS, buildMetadata } from '@/lib/seo';
 
 import '@/styles/globals.css';
@@ -51,6 +51,13 @@ export const metadata: Metadata = {
   }),
   authors: [{ name: siteConfig.name, url: SITE_URL }],
   creator: siteConfig.name,
+
+  // robots.txt is a request; a meta tag is the stronger signal, and it is the
+  // one that keeps a draft page out of a results listing. Both are driven by
+  // the same flag so they cannot disagree. See SITE_INDEXABLE.
+  robots: SITE_INDEXABLE
+    ? { index: true, follow: true }
+    : { index: false, follow: false, nocache: true },
 };
 
 export const viewport: Viewport = {

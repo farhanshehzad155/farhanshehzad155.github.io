@@ -21,6 +21,33 @@
 export const SITE_URL = 'https://farhanshehzad155.github.io';
 
 /**
+ * Whether search engines may index the site.
+ *
+ * ---------------------------------------------------------------------------
+ * CURRENTLY FALSE ON PURPOSE.
+ *
+ * The content is structurally complete and factually incomplete: unresolved
+ * TODO markers render as visible body text on the case study pages, employment
+ * dates are unverified, and the Proglo permission (PRD Q1) is outstanding.
+ *
+ * An indexed page carrying "TODO(Q7): expand once the permitted level of detail
+ * is confirmed" under Farhan's name would undercut the exact thing this site
+ * exists to demonstrate. Worse, a search engine that indexes a draft may keep
+ * serving it from cache well after the page is fixed.
+ *
+ * So the site deploys, is publicly reachable, and can be checked on real
+ * devices — but asks not to be indexed until the content is finished.
+ *
+ * FLIP THIS TO `true` WHEN:
+ *   1. `npm run validate:strict` passes with zero warnings, and
+ *   2. the launch checklist in TRD section 15.3 is complete.
+ *
+ * Then redeploy and submit the sitemap to Google Search Console.
+ * ---------------------------------------------------------------------------
+ */
+export const SITE_INDEXABLE = false;
+
+/**
  * Absolute URL for a route path.
  *
  * Trailing slashes are preserved deliberately: `trailingSlash: true` means the
