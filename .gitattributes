@@ -1,0 +1,8 @@
+# Normalise line endings. Development happens on Windows, CI runs on Linux, and
+# without this the shell scripts inside the workflow files break on checkout.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.woff2 binary
+*.pdf binary

@@ -1,0 +1,61 @@
+{
+  "name": "farhanshehzad155.github.io",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Personal engineering portfolio - Farhan Shehzad",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "prebuild": "npm run validate:content && npm run build:meta",
+    "build": "next build",
+    "start": "next start",
+    "serve": "npx --yes serve out",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test \"src/**/*.test.ts\"",
+    "validate:content": "tsx scripts/validate-content.ts",
+    "validate:strict": "tsx scripts/validate-content.ts --strict",
+    "build:meta": "tsx scripts/build-meta.ts",
+    "check:links": "tsx scripts/check-links.ts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@mdx-js/loader": "^3.1.0",
+    "@next/mdx": "^15.5.0",
+    "next": "^15.5.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "rehype-autolink-headings": "^7.1.0",
+    "rehype-slug": "^6.0.0",
+    "remark-gfm": "^4.0.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.6",
+    "@tailwindcss/postcss": "^4.1.0",
+    "@types/mdx": "^2.0.13",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "eslint": "^9.18.0",
+    "eslint-config-next": "^15.5.0",
+    "eslint-plugin-jsx-a11y": "^6.10.0",
+    "prettier": "^3.4.0",
+    "tailwindcss": "^4.1.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  },
+  "browserslist": [
+    "last 2 Chrome versions",
+    "last 2 Firefox versions",
+    "last 2 Safari versions",
+    "last 2 Edge versions",
+    "iOS >= 16",
+    "Android >= 110"
+  ]
+}
