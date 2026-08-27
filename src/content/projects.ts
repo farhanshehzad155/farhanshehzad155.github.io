@@ -12,10 +12,8 @@ export const earlierProjects: Project[] = [
     description:
       'Final year project. A robotic arm that helps someone eat without use of their hands: computer vision in C++ and Python detects mouth position, a Raspberry Pi drives servo and stepper motors to bring food to it, and Google Assistant handles voice control.',
   },
-  {
-    name: 'FitnessTime',
-    year: '2018',
-    description:
-      'TODO(content): one honest sentence on what this was and what was interesting about building it. If nothing was, cut the entry rather than padding it.',
-  },
+  // FitnessTime was listed here as a second entry. Removed rather than padded:
+  // no description could be written for it that was not invented, and PRD
+  // FR-A5 asks for formative work presented honestly, not a longer list. Add it
+  // back if there is something real to say about what it was.
 ];

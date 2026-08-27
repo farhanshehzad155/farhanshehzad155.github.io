@@ -19,23 +19,26 @@ export const siteConfig: SiteConfig = {
   location: 'Lahore, Pakistan',
   timezone: 'UTC+5',
 
-  // FR-G8. TODO(Q12): confirm what he is actually open to before setting this
-  // to true. Until then the chip does not render, which is better than
-  // advertising an availability that may not be accurate.
-  available: false,
-  availabilityNote: 'Open to AI engineering and automation roles, remote or hybrid.',
+  // FR-G8. Confirmed 28 Aug 2026: open to full-time, part-time and contract,
+  // remote. Set this back to false the moment that stops being true — a stale
+  // "open to work" chip is worse than none.
+  available: true,
+  availabilityNote: 'Open to work — full-time, part-time or contract, remote.',
 
   email: 'farhanshehzad155@gmail.com',
 
   socials: [
     { label: 'GitHub', url: 'https://github.com/farhanshehzad155' },
-    // TODO(Q11): confirm the exact LinkedIn vanity URL and add ORCID / Google
-    // Scholar, which FR-SEO5 needs for the Person `sameAs` array.
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/farhanshehzad155' },
   ],
 
-  // FR-A7: a professional photograph, or no photograph. No placeholder avatar.
-  // TODO(Q13): supply a photo or leave this undefined permanently.
+  // FR-A7: a professional photograph, or no photograph. No placeholder avatar,
+  // no AI-generated portrait. None supplied, so /about renders a text-only
+  // header. Add `photo: { src, alt }` here when one exists.
+  //
+  // No Google Scholar or ORCID profile exists yet, so `socials` carries only
+  // the two that do. The publication is reachable by DOI instead, which is the
+  // stronger link anyway.
 };
 
 /**
@@ -49,13 +52,17 @@ export const workIndexIntro =
 /**
  * FR-A1. 300-450 words of first-person prose for /about.
  *
- * TODO(content): the opening two paragraphs below are the Appendix A.3 draft.
- * The remainder needs writing before launch, and the whole thing needs reading
- * aloud (PRD section 19.1) to check it does not read as machine-written.
+ * Opens on the Appendix A.3 draft, then continues from the timeline in
+ * roles.ts. Farhan should read the whole thing aloud before launch (PRD
+ * section 19.1) and correct anything that is not how he would say it. The
+ * facts are his; the phrasing is not yet.
  */
 export const aboutBio: string[] = [
   'I started in research. My MPhil work was on text categorisation, specifically on a term weighting method that reduces the bias long documents introduce into classification, which ended up published in Mathematics in 2022. Somewhere in the middle of that I noticed I enjoyed the plumbing more than the models: getting data out of one system, into a shape something else could use, reliably, at three in the morning without anyone watching.',
-  'That turned into five years of automation work. TODO(content): continue from the Appendix A.3 draft. Cover the move from full-stack work into AI automation, and what kind of problem is actually interesting to solve.',
+  'That turned into automation work. It started with e-commerce operations. Order validation, carton selection, shipping labels, inventory planning, price monitoring: the sort of work that is nobody’s job and everybody’s afternoon. Then integration work across whatever a client already ran on, which usually meant some combination of Amazon, Shopify, ShipStation and a carrier or two. Most of it was one problem wearing different clothes. Two systems that were never designed to talk to each other, a person in between doing the translation by hand, and a business quietly paying for that person’s time.',
+  'Around the point language models became reliable enough to put in a pipeline, the interesting part of the job changed. The question stopped being whether something could be automated and became which part a model should do and which part has to stay deterministic. I care about that line more than almost anything else in my work. In the CV anonymization pipeline I build at Expinder, a model reads the document and reports where a person is identified; deterministic rules perform the actual removal. That split is the design, and it is what makes the result auditable rather than merely usually right.',
+  'In between, I spent a stretch on product engineering rather than automation: full-stack work on a live shipping platform in Next.js, TypeScript and Go, including the REST APIs and the OpenAPI contract underneath them. That period is why I would rather agree the interface contract before writing the implementation, and why I am comfortable owning something from architecture through to the part where it runs unattended.',
+  'What I like is a problem where the manual process is well understood, expensive and dull, and where the real work is not the automation but deciding what is safe to automate, what stays in front of a person, and how the thing behaves when it fails. I am based in Lahore and work remotely.',
 ];
 
 /** FR-CT7. Stated on /contact, and it has to be true. */

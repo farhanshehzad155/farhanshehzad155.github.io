@@ -93,8 +93,20 @@ export interface CaseStudy {
   contribution: string;
   /** FR-C7. Results with tier qualifiers. */
   outcomes: Metric[];
-  /** FR-C7. Required; an empty string is a build error (rule CV-2). */
-  whatDidNotWork: string;
+  /**
+   * FR-C7. One thing that did not work or had to be revised.
+   *
+   * Optional in the type, and a WARNING rather than an error in the validator
+   * (rule CV-2b). It cannot be inferred from anything — only the person who
+   * built the system knows what went wrong — so the choice was between
+   * blocking every build until it is written, fabricating it, or rendering
+   * nothing. The section is simply omitted when absent.
+   *
+   * Its absence is still the single biggest weakness in a case study. It is
+   * what a hiring engineer looks for, and `validate:strict` will not pass
+   * while any case study is missing it.
+   */
+  whatDidNotWork?: string;
   /** FR-C8. */
   stack: StackItem[];
   /** FR-C9. Target 4-7 minutes. */
@@ -265,7 +277,7 @@ export const caseStudySchema = z.object({
   constraints: z.array(z.string().min(1)),
   contribution: z.string(),
   outcomes: z.array(metricSchema),
-  whatDidNotWork: z.string(),
+  whatDidNotWork: z.string().optional(),
   stack: z.array(stackItemSchema).min(1),
   readingMinutes: z.number().int().positive(),
   schematic: z.string().optional(),

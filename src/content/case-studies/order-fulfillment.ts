@@ -1,4 +1,12 @@
-/** PRD section 8.4.3. E-commerce fulfillment automation. */
+/**
+ * PRD section 8.4.3. E-commerce fulfillment automation.
+ *
+ * Drawn from Farhan's own Karmic Seed role bullets, supplied 28 Aug 2026.
+ *
+ * The ~80% figure from the role bullet is NOT reproduced as an outcome metric:
+ * rule CV-1 requires a stated basis for a Tier B claim and none exists yet
+ * (PRD Q5).
+ */
 
 import type { CaseStudy } from '../schema';
 
@@ -6,39 +14,36 @@ export const orderFulfillment: CaseStudy = {
   slug: 'order-fulfillment',
   title: 'Order fulfillment automation',
   summary:
-    'A pipeline that validates incoming orders, picks a carton by volumetric weight, then rates and labels the shipment across several carriers.',
+    'A pipeline that validates incoming orders, picks a carton by volumetric weight, then rates and generates the shipping label across several carriers.',
   metaDescription:
     'Automating e-commerce fulfillment: order validation, volumetric-weight carton selection, and multi-carrier rate and label generation across Amazon and Shopify.',
-  organisation: 'Karmic Seed',
-  // Rule C2: the end client is referred to by sector only (FR-OF5).
-  clientSector: 'A US wellness brand shipping via Amazon FBM and Shopify',
-  role: 'Automation Engineer',
-  period: { start: '2022-01', end: '2024-01' }, // TODO(LI): confirm.
+  organisation: 'Karmic Seed LLC',
+  role: 'Automation & Integration Specialist',
+  period: { start: '2022-07', end: '2025-02' },
   domain: 'ecommerce',
   featured: false,
 
   context:
-    'A brand selling through both Amazon and its own Shopify storefront, fulfilling orders itself rather than through Amazon. Every order has to be checked, packed into a box, rated across carriers, and labelled. TODO(content): expand to 80-150 words.',
+    'A business selling through both Amazon and Shopify, fulfilling its own orders rather than handing them to a marketplace. Every order that arrives has to be checked, packed into a box, rated across carriers, and labelled. None of those steps is difficult. All of them are mandatory, all of them repeat per order, and together they consume the part of the day that could have gone to anything else.',
 
   problem:
-    'Done by hand, each order is a sequence of small decisions that are individually easy and collectively expensive. Is this address valid. What will this fit in. Which carrier is cheapest for this box to this destination. Then the label. Multiply that by daily order volume and it becomes most of one person day, with the cost of a mistake being a mis-shipped or overpriced parcel.',
+    'Done by hand, an order is a sequence of small decisions that are individually easy and collectively expensive. Is this address deliverable. What will these items actually fit in. Which carrier is cheapest for that box to that destination. Then the label. Multiply by daily volume and it is most of one person’s day, with two failure modes waiting: a parcel shipped to a bad address, and a parcel that quietly cost more than it needed to because somebody grabbed the nearest box.',
 
-  // FR-OF2: the carton-selection logic is the technical centrepiece.
+  // FR-OF2: carton selection is the technical centrepiece.
   contribution:
-    'I built the pipeline end to end: order ingestion and validation, the carton selection step, and the carrier integrations for rating and label generation. The interesting part is carton selection. Carriers bill on dimensional (volumetric) weight as well as actual weight, so the box you choose changes what a shipment costs regardless of what is inside it. The selection has to fit the items, avoid an oversize surcharge, and not waste volume, which makes it a small packing problem rather than a lookup.',
+    'I built the pipeline end to end: order ingestion and validation across both sales channels, the carton selection step, and the carrier integrations for rating and label generation. The part worth explaining is carton selection. Carriers bill on dimensional weight as well as actual weight, and charge whichever is greater, so the box you choose changes what a shipment costs regardless of what is inside it. Selection has to satisfy several things at once: the items must physically fit, the box has to be one the warehouse actually stocks, the dimensions must stay under the carrier’s oversize thresholds, and among the boxes that qualify it should pick the one that rates cheapest for that destination. That makes it a small packing problem rather than a lookup.',
 
   constraints: [
-    'Two order sources with different data shapes and different guarantees about address quality.',
-    'Carrier APIs are external and they fail. Rate limits, timeouts and bad responses all have to be absorbed without dropping or duplicating a shipment.',
-    'A finite set of real carton sizes actually held in the warehouse. The optimal box does not help if it is not on the shelf.',
-    'TODO(content): add the budget, vendor and team-size constraints.',
+    'Two sales channels with different data shapes and different guarantees about address quality, feeding one pipeline.',
+    'Carrier APIs are external and they fail. Rate limits, timeouts and bad responses have to be absorbed without dropping a shipment or buying a second label for one that already has one.',
+    'A finite set of real carton sizes actually held in the warehouse. The theoretically optimal box does not help if it is not on the shelf.',
+    'The output is a physical label on a physical parcel, so a mistake is not a retry. It is a return.',
   ],
 
-  // FR-OF3: the ~80% claim needs its basis (Q5) or it does not appear.
   outcomes: [
     {
       value: '',
-      label: 'Turned a per-order manual sequence into a reviewed automated run.',
+      label: 'Turned a per-order manual sequence into an automated run with a review step.',
       tier: 'capability',
     },
     {
@@ -47,25 +52,33 @@ export const orderFulfillment: CaseStudy = {
         'Carton selection accounts for volumetric weight before rating, so the box choice stops being a hidden cost.',
       tier: 'capability',
     },
+    {
+      value: '',
+      label:
+        'One pipeline covers both Amazon and Shopify orders, so fulfillment does not fork by sales channel.',
+      tier: 'capability',
+    },
   ],
 
-  whatDidNotWork:
-    'TODO(content): required (rule CV-2). FR-OF4 also needs covering: multi-item orders, oversized items, address validation failures, and carrier API errors and retries. The retry story in particular is where this kind of pipeline usually earns its scars.',
+  // whatDidNotWork absent by design — see the note on the field in schema.ts.
 
   stack: [
     {
       name: 'Python',
-      rationale: 'The pipeline is data transformation and API calls, and the carrier client libraries were straightforward here.',
+      rationale:
+        'The work is data transformation and API calls, which is where the tooling and the carrier client libraries already were.',
     },
+    { name: 'Amazon Seller Central API' },
     { name: 'Shopify API' },
-    { name: 'Amazon selling APIs' },
     {
-      name: 'FedEx / DHL APIs',
-      rationale: 'Rating against more than one carrier is the point. A single-carrier integration cannot answer the cost question.',
+      name: 'FedEx & DHL APIs',
+      rationale:
+        'Rating against more than one carrier is the entire point. A single-carrier integration cannot answer the question the pipeline exists to ask.',
     },
     {
       name: 'ShipStation',
-      rationale: 'TODO: one line on why this was used rather than going direct to every carrier.',
+      rationale:
+        'Covers the carriers and label formats it made no sense to integrate individually, leaving the direct integrations for the ones that mattered.',
     },
   ],
 

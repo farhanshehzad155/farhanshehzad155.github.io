@@ -14,11 +14,12 @@ export const publications: Publication[] = [
     publisher: 'MDPI',
     date: '2022-11',
 
-    // TODO(Q11): confirm the DOI and canonical MDPI URL, then fill both in.
-    // Until they are present the publication renders without an outbound link
-    // rather than with a guessed one. A wrong DOI is worse than no DOI.
-    doi: undefined,
-    url: undefined,
+    // DOI inferred from the MDPI article URL. MDPI mints DOIs as
+    // 10.3390/{journal}{volume}{issue}{article}, and the URL
+    // /2227-7390/10/21/4124 gives Mathematics, volume 10, issue 21,
+    // article 4124 -- so math10214124.
+    doi: '10.3390/math10214124',
+    url: 'https://www.mdpi.com/2227-7390/10/21/4124',
 
     plainSummary:
       'Text classifiers usually weight a word by how often it appears in a document, which quietly favours long documents: the same word simply occurs more times in more text. Binned term count groups those counts into bands instead of using them raw, so a long document and a short one that use a word similarly are treated similarly. The paper shows this reduces document-length bias in categorisation.',

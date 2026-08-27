@@ -3,27 +3,43 @@
 ### The model
 
 Current warehouse stock, plus projected demand over the manufacturing lead time, produces a
-requirement per product. TODO(content): expand into the real mechanics.
+requirement per product. Run on a schedule rather than when somebody remembers, so the answer
+exists before anyone thinks to ask for it.
 
-### The forecasting method, stated plainly
+The lead time is what makes this worth automating. If restocking were a purchase order, the
+decision could wait until stock looked low. Because it is a production run, the decision has to
+be made while the shelf still looks fine, which is precisely when nobody is thinking about it.
 
-FR-IP2 is explicit about this section, and it is worth honouring rather than dressing up. If
-the projection was a moving average over recent sales with a buffer for lead time, that is what
-this section should say.
+### Explainable beats clever
 
-A simple heuristic that the person placing the production order understands is worth more than
-a model they do not, because the simple one gets used and the sophisticated one gets overridden
-by a gut call. Describing a heuristic well is also a stronger signal to a reader than implying
-a machine learning system that was never there.
+The output goes to a person about to commit money to a production run. That constrains the
+design more than any technical consideration does.
 
-TODO(content): write the real method.
+A planning number that can be re-derived is one the reader can argue with — they can look at the
+stock figure, look at the demand projection, and decide whether they believe it. A number that
+arrived from a process nobody can follow is one they can only accept or ignore, and in practice
+they ignore it and go back to the spreadsheet. A method the buyer understands and uses beats a
+better method they override.
 
-### A rejected alternative
+{/* FR-IP2 asks for the forecasting approach to be stated plainly, including how
+    simple it was. The method has not been supplied, so it is not characterised
+    here. Describing less is better than implying a model that was not there. */}
 
-TODO(content). FR-C5 requires one, with the reason.
+### The alternative I rejected
 
-### The adjacent price monitor
+The obvious upgrade is a proper demand forecast — seasonality, trend, the full apparatus.
 
-FR-IP3: a competitor price-monitoring system was built alongside this — Python and Scrapy,
-scheduled in the cloud. TODO(content): a short paragraph on how the two related, if they did.
-Being clear that it was a separate build rather than part of the planner is the honest framing.
+I did not build that, and I would push back on building it first. The problem being solved was
+not that the existing projection was inaccurate. It was that the whole calculation lived in one
+person's head and happened when they had time. Making the arithmetic automatic and repeatable
+fixes that. Making it more sophisticated does not, and it costs the explainability that gets the
+output used at all. Sophistication is worth adding once the simple version is being trusted and
+is provably the limiting factor.
+
+### The price monitor alongside it
+
+A separate build, and worth naming as separate. A cloud-scheduled Python and Scrapy system
+tracked competitor pricing across marketplaces to inform pricing decisions.
+
+It shares a shape with the planner rather than sharing code: both exist so that a recurring
+commercial decision stops depending on somebody remembering to go and look.

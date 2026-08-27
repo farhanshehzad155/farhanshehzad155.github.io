@@ -5,8 +5,6 @@ Personal engineering portfolio for **Farhan Shehzad** — AI automation and inte
 A static Next.js site, deployed to GitHub Pages on merge to `main`. No server, no database, no CMS.
 
 - **Live:** https://farhanshehzad155.github.io
-- **Content TODOs:** [`docs/CONTENT-TODO.md`](docs/CONTENT-TODO.md) — what is still needed, and where it goes
-- **Publishing:** [`docs/PUBLISHING.md`](docs/PUBLISHING.md) — how to push this to GitHub and go live
 - **Specification:** [`docs/PRD-portfolio-farhan-shehzad.md`](docs/PRD-portfolio-farhan-shehzad.md)
 - **Technical design:** [`docs/TRD-portfolio-farhan-shehzad.md`](docs/TRD-portfolio-farhan-shehzad.md)
 
@@ -86,28 +84,23 @@ The route, the sitemap entry, the work-index card, the home-page card and the pr
 
 ---
 
-## Current status: not ready to launch
+## Current status: live, indexed, and not finished
 
-The site builds, deploys, and every route renders. The content is **structurally complete and factually incomplete**, on purpose.
+Every page carries real content. No placeholder text renders anywhere, dates and titles are confirmed, and the site is open to search engines (`SITE_INDEXABLE` in `src/lib/constants.ts`).
 
-`npm run validate:strict` currently reports around 38 outstanding items. Each maps to a question in PRD section 22 that only Farhan can answer:
+`npm run validate:strict` still reports **9 warnings**, none of which are inaccuracies. They are quality gaps, in rough order of how much they cost:
 
-| Marker | Blocks | Question |
+| Rule | Count | What it means |
 |---|---|---|
-| `TODO(LI)` | All employment dates and titles | Reconcile against the LinkedIn profile. Dates are factual claims and none of the ones in this repository are verified. |
-| `TODO(Q1)`, `TODO(Q2)` | The whole Proglo case study | Written permission from Proglo World, and the precise ownership boundary |
-| `TODO(Q4)`, `TODO(Q5)` | Both ~80% metrics | The measurement basis. **Until supplied, the numbers are absent** — the claims sit at tier `capability` with no figure at all, rather than appearing with a placeholder. |
-| `TODO(Q7)` | The CV anonymization case study | Permission from Expinder on the level of detail |
-| `TODO(Q11)` | The publication link | Confirm the MDPI DOI. Currently unlinked, because a wrong DOI is worse than none. |
-| `TODO(content)` | Various | Prose that needs writing rather than inventing |
+| `CV-15` | 3 | Three role bullets carry a number — two `~80%` and one `50+` — without the measured basis PRD §6.3 requires. **This is the one worth closing.** Supply what was sampled, before and after, and over what period (PRD Q4, Q5, Q6), and the numbers move into the case study outcomes where they render with a footnote and the build can enforce them. |
+| `CV-2b` | 5 | No case study has a "what did not work" section (FR-C7). It cannot be inferred — only the person who built the thing knows — so the section is omitted rather than fabricated. It is what a hiring engineer looks for, and its absence is the biggest single weakness on the site. |
 
-Launch also requires, and none of these exist yet:
+Still outstanding, and not blocking:
 
-- **OG images.** Every page emits `og:image` tags pointing at `/og/*.png`, and those files are not generated yet — `scripts/generate-og.ts` is phase 4. Until it runs, social cards will show a broken image. This is the most visible of the gaps.
+- **OG images.** Every page emits `og:image` pointing at `/og/*.png`, and those are not generated yet (`scripts/generate-og.ts`, phase 4). Any link shared on social shows a broken card.
 - The five SVG schematics (`FR-C5`), a contact-form provider (`FR-CT3`, TRD T2), an analytics provider (`FR-AN1`, TRD T1), and the manual NVDA and VoiceOver passes (`FR-AC10`).
-- The four remaining CI gates — axe, Lighthouse, link checking, and the no-JS pass — are specified in the workflow file as a commented block and are not yet wired.
-
-**The site is publishable at every commit** in the sense that it contains no claim its author cannot support. It is not *finished*.
+- Four CI gates — axe, Lighthouse, link checking, and the no-JS pass — are specified as a commented block in the workflow and not yet wired.
+- Written permission from Proglo World (PRD Q1) and Expinder (Q7). Both case studies describe only Farhan's own work using his own words, and both companies already appear on his public LinkedIn, but the PRD asks for written confirmation and it has not been obtained.
 
 ---
 

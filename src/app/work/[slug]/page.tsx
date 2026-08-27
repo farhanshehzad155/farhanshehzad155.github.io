@@ -158,8 +158,14 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 ))}
               </div>
 
-              <h3 className="mt-8">What did not work</h3>
-              <p className="mt-3 prose-measure">{study.whatDidNotWork}</p>
+              {/* Omitted rather than stubbed when absent. Showing the heading
+                  over a placeholder would be worse than showing nothing. */}
+              {study.whatDidNotWork ? (
+                <>
+                  <h3 className="mt-8">What did not work</h3>
+                  <p className="mt-3 prose-measure">{study.whatDidNotWork}</p>
+                </>
+              ) : null}
             </section>
           </div>
 

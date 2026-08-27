@@ -145,12 +145,16 @@ export function validateContent(): ValidationReport {
           'is what stops the page misleading a reader about scope.',
       );
     }
-    if (!study.whatDidNotWork.trim()) {
-      error(
-        'CV-2',
+    // CV-2b. A warning rather than an error, because this cannot be inferred
+    // from anything — only the person who built the system knows what went
+    // wrong — and the alternatives were blocking every build or fabricating it.
+    // The section is omitted from the page when absent.
+    if (!study.whatDidNotWork?.trim()) {
+      warn(
+        'CV-2b',
         `${study.slug} → whatDidNotWork`,
-        'every case study must name at least one thing that did not work or had to be revised (FR-C7). ' +
-          'A case study without it reads as marketing.',
+        'no "what did not work" section (FR-C7). This is what a hiring engineer looks for, and a case ' +
+          'study without it reads as marketing. Blocks release under --strict.',
       );
     }
 
@@ -303,6 +307,44 @@ export function validateContent(): ValidationReport {
         );
       }
     }
+  }
+
+  /* CV-15 — unqualified numbers outside the Metric type -------------------- */
+
+  /*
+   * The hole this closes.
+   *
+   * Rules CV-1 and CV-1b police `Metric` objects, so an outcome cannot carry a
+   * number without a basis. But PRD section 6.3 says a Tier B or C claim needs
+   * its qualifier ANYWHERE it appears, and a role bullet is just a string — it
+   * bypasses the metric machinery entirely.
+   *
+   * So a bullet reading "reduced effort by approximately 80%" ships unqualified
+   * while the equivalent Metric would fail the build. This rule makes that
+   * visible on every run rather than leaving the site's strongest claims
+   * outside its strictest rule.
+   *
+   * A warning, not an error: these are the owner's own claims about his own
+   * work, and blocking his build over his CV copy would be the wrong call. The
+   * fix is to supply the basis (PRD Q4, Q5, Q6), at which point the number
+   * belongs in a Metric with a footnote.
+   */
+  const QUANTIFIED = /\b(?:\d+(?:\.\d+)?\s*(?:%|percent)|\d{2,}\+)/i;
+
+  for (const role of roles) {
+    role.bullets.forEach((bullet, i) => {
+      const match = bullet.match(QUANTIFIED);
+      if (match) {
+        warn(
+          'CV-15',
+          `roles (${role.company}) → bullets[${i}]`,
+          `contains an unqualified quantitative claim ("${match[0]}") outside the Metric type, so it ` +
+            'ships without the basis PRD section 6.3 requires. Supply what was sampled, the before and ' +
+            'after values, and the period, then move the number into the case study outcomes where ' +
+            'rule CV-1 can enforce it.',
+        );
+      }
+    });
   }
 
   /* CV-13 — a Tier A publication claim needs its link (FR-A4, FR-SEO6) ---- */

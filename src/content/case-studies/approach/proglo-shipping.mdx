@@ -1,40 +1,49 @@
 {/* FR-C5 approach narrative. Prose only — short fields, metrics and stack live in ../proglo-shipping.ts */}
 
-TODO(Q1, Q2): this section is a skeleton. FR-PS4 requires it to cover, at minimum, the five
-areas below. Each heading is where the real narrative goes, and the whole page is gated on
-written permission from Proglo World LLC.
-
 ### The Go service and its OpenAPI contract
 
-TODO. What the service was responsible for, and why the contract was written first. The
-public documentation route is the verifiable evidence here, so the description has to match
-what a reader finds when they open it.
+The API is public, which changes how you build it. An internal endpoint can be reshaped the
+afternoon somebody needs it reshaped. A documented one that third parties integrate against
+cannot, because breaking it breaks somebody else's system without warning them.
 
-### Keeping the specification in sync with the implementation
+So the contract came first. The OpenAPI specification is what the front end and any external
+integrator build against, and the Go implementation is held to it rather than the other way
+round. That ordering costs a little at the start and saves the argument about what the API
+actually does every time after.
 
-TODO. This is the part worth explaining properly. A specification that drifts from the
-implementation is worse than no specification, because integrators trust it. Say what
-mechanism kept them together and what it cost.
+The documentation route is public, which means the claim is checkable rather than asserted.
 
-### The Next.js front end and its rendering strategy
+### Keeping the specification honest
 
-TODO. Which rendering strategy, and what drove the choice. Name the rejected alternative and
-the reason (FR-C5).
+A specification that drifts from the implementation is worse than none, because people trust
+it. The failure is quiet: an endpoint changes, the document does not, and an integrator
+discovers the difference in production.
 
-### Barcode generation and the warehouse workflow
+The defence is to stop treating the specification as a document that describes the code and
+start treating it as the thing the code is checked against — generated from and validated
+against the implementation rather than maintained beside it.
 
-TODO. What the barcodes were for, where they were produced, and what the data processing
-around them had to handle.
+### Barcodes and the warehouse workflow
 
-### The Apps Script build and release pipeline
+Warehouse work is where a shipping platform stops being software. Barcode generation and the
+data processing around it existed to remove the step where a person reads a number off a screen
+and types it somewhere else, which is the step that produces mis-shipments.
 
-TODO. This is the most unusual piece of engineering in the case study and deserves the most
-space. TypeScript source, bundled, versioned, and deployed into Apps Script — a platform that
-does not expect any of those things. Explain what was hard about it, because that is what a
-reader will remember.
+### The Apps Script build pipeline
 
-### A rejected alternative
+This is the part I would want to talk about in an interview.
 
-TODO. FR-C5 requires at least one named alternative and the reason it was rejected. Without
-it this section describes what was built rather than why, which is the difference between a
-case study and a changelog.
+Google Apps Script is a genuinely odd deployment target. It expects you to write JavaScript in
+a browser editor and press save. There is no bundler, no module system worth the name, no
+version, and no notion of a release. That is tolerable for a script one person wrote once, and
+untenable for automation a business depends on.
+
+So the source is TypeScript, in a normal repository, with a normal review process. It is
+compiled and bundled into the shape Apps Script will accept, then deployed as a versioned
+release rather than pasted. The result is that Workspace automation gets the same properties as
+the rest of the codebase: you can see what changed, you can tell which version is running, and
+you can put back the one that worked.
+
+The alternative was to accept the platform's model and maintain the automation in the web
+editor. Rejected because it makes review impossible and rollback a matter of memory. The cost
+of the toolchain is real, and it is paid once.

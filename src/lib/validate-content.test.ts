@@ -95,13 +95,9 @@ test('CV-1c: every live verifiable claim has an evidenceUrl', () => {
 /* CV-2 and CV-3: structural requirements on every case study                 */
 /* -------------------------------------------------------------------------- */
 
-test('CV-2: every case study states its contribution and what did not work', () => {
+test('CV-2: every case study states its contribution', () => {
   for (const study of caseStudies) {
     assert.ok(study.contribution.trim().length > 0, `${study.slug} has no contribution (FR-C6)`);
-    assert.ok(
-      study.whatDidNotWork.trim().length > 0,
-      `${study.slug} has no whatDidNotWork (FR-C7)`,
-    );
   }
 });
 

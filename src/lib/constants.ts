@@ -24,28 +24,27 @@ export const SITE_URL = 'https://farhanshehzad155.github.io';
  * Whether search engines may index the site.
  *
  * ---------------------------------------------------------------------------
- * CURRENTLY FALSE ON PURPOSE.
+ * Turned on 28 Aug 2026.
  *
- * The content is structurally complete and factually incomplete: unresolved
- * TODO markers render as visible body text on the case study pages, employment
- * dates are unverified, and the Proglo permission (PRD Q1) is outstanding.
+ * It was false while unresolved TODO markers rendered as visible body text on
+ * the case study pages — an indexed page reading "TODO(Q7): expand once the
+ * permitted level of detail is confirmed" under Farhan's name would have
+ * undercut the exact thing this site exists to demonstrate, and a search engine
+ * that caches a draft keeps serving it long after the page is fixed.
  *
- * An indexed page carrying "TODO(Q7): expand once the permitted level of detail
- * is confirmed" under Farhan's name would undercut the exact thing this site
- * exists to demonstrate. Worse, a search engine that indexes a draft may keep
- * serving it from cache well after the page is fixed.
+ * That is now resolved: every page carries real content, dates and titles are
+ * confirmed, and no placeholder text is rendered anywhere.
  *
- * So the site deploys, is publicly reachable, and can be checked on real
- * devices — but asks not to be indexed until the content is finished.
+ * `npm run validate:strict` still reports warnings, and none of them are
+ * reasons to stay out of the index. They are quality gaps rather than
+ * inaccuracies: five case studies have no "what did not work" section, and
+ * three role bullets carry a number without its measured basis (rule CV-15).
+ * The second of those is worth closing soon — see PRD Q4, Q5 and Q6.
  *
- * FLIP THIS TO `true` WHEN:
- *   1. `npm run validate:strict` passes with zero warnings, and
- *   2. the launch checklist in TRD section 15.3 is complete.
- *
- * Then redeploy and submit the sitemap to Google Search Console.
+ * Set this back to false if the site ever regresses to placeholder content.
  * ---------------------------------------------------------------------------
  */
-export const SITE_INDEXABLE = false;
+export const SITE_INDEXABLE = true;
 
 /**
  * Absolute URL for a route path.

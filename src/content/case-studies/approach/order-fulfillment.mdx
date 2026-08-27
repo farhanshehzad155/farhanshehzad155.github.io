@@ -2,35 +2,44 @@
 
 ### The shape of the pipeline
 
-Orders arrive from two sources, are validated, are assigned a carton, are rated across
-carriers, and come out the other end as a label. Each stage can fail independently, so each
-stage has to be able to hand a specific problem back to a person rather than failing the whole
-run.
+Orders arrive from two channels, are validated, are assigned a carton, are rated across
+carriers, and come out the other end as a label.
 
-TODO(content): expand.
+Each stage can fail on its own, so each stage has to be able to hand a specific problem back to
+a person rather than failing the whole run. An address that will not validate is a different
+problem from a carrier that timed out, and treating them the same way means somebody has to
+work out which one happened before they can do anything about it.
 
-### Why the carton is the interesting decision
+### Why the box is the interesting decision
 
-Carriers do not bill on weight alone. They bill on dimensional weight — a function of the
-box's volume — and charge the greater of that and the actual weight. So an item that weighs
-very little in a box that is slightly too large can cost the same as something several times
-heavier.
+Carriers do not bill on weight alone. They bill on dimensional weight, a function of the box's
+volume, and charge whichever of the two is greater. So a light item in a box that is slightly
+too large can cost the same as something several times heavier.
 
-That makes carton selection the step where the money is. It has to satisfy several things at
-once: the items must physically fit, the box has to be one the warehouse actually stocks, the
-dimensions must stay under the carrier's oversize thresholds, and among the boxes that qualify
-it should pick the one that rates cheapest for the destination.
+That makes carton selection the step where the money is. It has to satisfy four things at once:
+the items must physically fit, the box has to be one the warehouse actually stocks, the
+dimensions have to stay under the carrier's oversize thresholds, and among the boxes that
+qualify it should pick whichever rates cheapest to that destination.
 
-TODO(content): describe the selection method honestly. If it enumerates the available cartons
-and rates the viable ones, say that — it is a perfectly good answer, and describing it plainly
-is more credible than implying an optimiser that was never built.
+The last condition is the one that stops this being a lookup. The cheapest box is not a property
+of the box — it depends on where the parcel is going and which carrier is carrying it, so the
+candidates have to be rated rather than ranked in advance.
 
-### A rejected alternative
+### The alternative I rejected
 
-TODO(content). FR-C5 requires at least one named alternative with the reason for rejection.
+The simple version is a fixed mapping: this product goes in that box. It is easy to build, easy
+to explain, and it is what most operations do by default.
 
-### Failure handling
+I rejected it because it optimises nothing. It is the automated version of grabbing the nearest
+box, and it locks in whatever the mapping got wrong on the day it was written. Enumerating the
+real cartons and rating the viable ones costs more calls and answers the actual question.
 
-TODO(content). FR-OF4: multi-item orders, oversized items, address validation failures, and
-carrier API errors and retries. Retries against a label-generation endpoint are worth
-explaining carefully, because the naive version buys a second label.
+### When it goes wrong
+
+The failure cases are most of the work. Multi-item orders change the packing problem. Oversized
+items fall outside the normal thresholds. Addresses fail validation for reasons ranging from a
+typo to a genuinely undeliverable location.
+
+Retries deserve particular care. The naive retry against a label endpoint buys a second label
+for a parcel that already has one, which is a real cost and an operational mess. A retry here has
+to be able to ask whether the previous attempt actually succeeded before it tries again.

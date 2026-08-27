@@ -1,8 +1,17 @@
 /**
  * PRD section 8.4.2. Recruitment document pipeline.
  *
- * If FR-PS6 is triggered (Proglo permission refused), this case study becomes
- * the flagship and `featured` flips to true here.
+ * Drawn from Farhan's own Expinder role bullets, supplied 28 Aug 2026. Nothing
+ * here describes Expinder infrastructure, and no real candidate material of any
+ * kind appears (rule C5).
+ *
+ * The ~80% figure from the role bullet is deliberately NOT reproduced as an
+ * outcome metric here: rule CV-1 requires a stated basis for a Tier B claim and
+ * none exists yet (PRD Q4). The outcomes below describe the same result without
+ * the number.
+ *
+ * If FR-PS6 is ever triggered (Proglo objects to being named), this case study
+ * becomes the flagship and `featured` flips to true here.
  */
 
 import type { CaseStudy } from '../schema';
@@ -11,65 +20,77 @@ export const cvAnonymization: CaseStudy = {
   slug: 'cv-anonymization',
   title: 'CV anonymization pipeline',
   summary:
-    'An assisted pipeline that strips identifying details from candidate CVs at volume, using a model to read layout and deterministic rules to do the redaction.',
+    'An assisted pipeline that strips identifying details from candidate CVs at volume, using a model to read the layout and deterministic rules to do the removal.',
   metaDescription:
-    'How I combined LLM document understanding with deterministic redaction to anonymize candidate CVs at volume, with auditable output and a human review step.',
-  organisation: 'Expinder',
-  role: 'AI Automation Engineer',
-  period: { start: '2026-01', end: 'present' }, // TODO(LI): confirm.
+    'Combining LLM document understanding with deterministic redaction to anonymize candidate CVs at volume, so every removal is auditable rather than probable.',
+  organisation: 'Expinder GmbH',
+  role: 'AI Engineer',
+  period: { start: '2026-05', end: 'present' },
   domain: 'recruitment',
   featured: false,
 
   // FR-CV1.
   context:
-    'Recruitment agencies present candidates to client companies. Before a CV goes out it has to be stripped of the details that identify the candidate, both to support fair hiring and because the agency does not want to be bypassed. TODO(Q7): expand once the permitted level of detail is confirmed.',
+    'Recruitment agencies present candidates to client companies. Before a CV goes out it has to be stripped of the details that identify the person, partly to support fair hiring by keeping the first read on the work rather than the name, and partly because an agency that hands over full contact details has handed over its business. At any real volume this sits directly between sourcing a candidate and putting them in front of anyone.',
 
   problem:
-    'Anonymization is a document task that looks trivial and is not. Names appear in headers, footers, email addresses, file names, referee sections and in the body text. Layouts vary by candidate. Done by hand it is slow, and it is also unreliable, because a human reader skims. A single leaked identifier is not a small error either: it defeats the entire purpose of the exercise. TODO(Q7): confirm this framing.',
+    'Anonymization is a document task that looks trivial and is not. A name appears in the heading, in an email address, in the file name, in a footer repeated on every page, in a referee block, and in the middle of a sentence about a previous employer. Layouts vary by candidate, so there is no template to key off. Done by hand it is slow, and it is also unreliable, because a human reader skims and the fifth CV of the afternoon gets less attention than the first. The failure is not graceful either: one missed identifier does not degrade the result, it defeats the entire purpose of the exercise.',
 
-  // FR-CV2. This is the architectural point the page exists to make.
+  // FR-CV2. The architectural point the page exists to make.
   contribution:
-    'I designed and built the pipeline: the document understanding step, the deterministic redaction layer, the confidence handling, and the human review around it. The central decision is the split. A language model is good at reading a messy layout and saying where a person is identified. It is not something I would trust to perform the removal, because its output is probabilistic and cannot be audited line by line. So the model interprets, and deterministic rules redact. Every removal is then explainable and repeatable.',
+    'I designed and built the pipeline: the document understanding step, the deterministic redaction layer, the confidence handling, and the human review around it. The central decision is the split between the first two. A language model is genuinely good at reading a messy layout and reporting where a person is identified, including cases a rule would never anticipate. It is not something I would trust to perform the removal, because its output is probabilistic and cannot be checked line by line afterwards. So the model interprets and deterministic rules redact. Every removal is then a rule applied to a location, which means it can be explained, audited, and re-run to exactly the same result.',
 
   constraints: [
-    'Zero tolerance for a leaked identifier. A pipeline that is right 98 percent of the time is not usable for this, which rules out an approach where the model performs the redaction directly.',
-    'Candidate CVs are personal data, so processing location, retention and access all matter (FR-CV6). GDPR applies on the client side of the business.',
-    'Volume: the process only earns its keep if it handles a realistic daily intake, not a handful of documents.',
-    'TODO(Q7): add the real remaining constraints. Budget, existing vendors and team size are usually the interesting ones.',
+    'Zero tolerance for a leaked identifier. A pipeline that is right 98 percent of the time is not usable here, which rules out any design where the model performs the redaction directly.',
+    'Candidate CVs are personal data under GDPR, so where documents are processed, how long they are kept and who can reach them are design constraints rather than afterthoughts.',
+    'Volume. The pipeline only earns its place if it handles a realistic daily intake, which rules out anything needing per-document configuration.',
+    'The output has to be defensible to a client. If an agency is asked why a particular detail was removed, the answer needs to be a rule, not a model.',
   ],
 
-  // FR-CV4: the ~80% metric renders with a section 6.4 footnote or it is
-  // removed. It is removed until Q4 supplies the basis. See TRD section 4.5.
   outcomes: [
     {
       value: '',
       label:
-        'Cut a slow manual document task down to a review step, with the pipeline doing the reading and the removal.',
+        'Turned a slow manual document task into a review step, with the pipeline doing the reading and the removal.',
       tier: 'capability',
     },
     {
       value: '',
       label:
-        'Redaction is deterministic, so every removal can be audited and re-run to the same result.',
+        'Redaction is deterministic, so every removal can be explained, audited and re-run to the same result.',
+      tier: 'capability',
+    },
+    {
+      value: '',
+      label:
+        'Assisted, not autonomous. Low-confidence extractions route to a person rather than through to output.',
       tier: 'capability',
     },
   ],
 
-  whatDidNotWork:
-    'TODO(Q7): required (rule CV-2). FR-CV3 also needs covering here or in the approach: what happens on a low-confidence extraction, and what the human review step actually catches. The honest version of this section is the most persuasive part of the page.',
+  // whatDidNotWork absent by design — see the note on the field in schema.ts.
+  // FR-CV3's failure handling is covered in the approach body instead.
 
   stack: [
     {
       name: 'Python',
-      rationale: 'The document parsing and PDF tooling is there, and the rest of the pipeline was already Python.',
+      rationale:
+        'The document parsing and PDF tooling lives here, and the rest of the pipeline was already Python.',
     },
     {
       name: 'LLM document understanding',
-      rationale: 'Used for interpretation only. Chosen over a rules-only parser because CV layouts vary too much to enumerate.',
+      rationale:
+        'Used for interpretation only. Chosen over a rules-only parser because CV layouts vary more than anyone is going to enumerate.',
     },
     {
       name: 'Deterministic redaction rules',
-      rationale: 'Chosen over model-performed redaction because the output has to be auditable, not merely usually correct.',
+      rationale:
+        'Chosen over model-performed redaction because the output has to be auditable, not merely usually correct.',
+    },
+    {
+      name: 'CRM integration',
+      rationale:
+        'The anonymized document has to land where recruiters already work, or the pipeline just moves the manual step somewhere else.',
     },
   ],
 

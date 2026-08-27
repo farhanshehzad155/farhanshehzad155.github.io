@@ -3,28 +3,38 @@
 ### The chain
 
 Keyword research, topic generation, drafting, image generation, internal linking, publishing.
-Each stage hands structured output to the next rather than free text, so a failure is
-attributable to a stage instead of surfacing as a bad article at the end.
 
-TODO(content): expand.
+Each stage hands structured output to the next rather than free text. That is not a stylistic
+preference: it means a failure is attributable to a stage instead of surfacing as a bad article
+at the end with no way to tell where it went wrong.
 
 ### The part that is not the model
 
-FR-CP2 exists because a reader in 2026 has seen a lot of AI content pipelines and assumes the
-worst. Fair enough. So this section has to be specific rather than reassuring.
+A reader in 2026 has seen a lot of AI content pipelines and assumes the worst of them. Fair
+enough. So this section has to be specific rather than reassuring.
 
-Internal linking is the clearest example. Asking a model to add internal links produces links
-that look right and point nowhere, because the model is predicting plausible URLs rather than
-consulting the site. The pipeline instead keeps its own index of pages that exist and links
-against that, so a link either resolves or is not inserted.
+Internal linking is the clearest case. Ask a model to add internal links and it produces links
+that look entirely correct and point at nothing, because it is predicting plausible URLs rather
+than consulting the site. The pipeline instead maintains its own index of pages that exist and
+links against that. A link either resolves or it is not inserted. There is no third option where
+it is probably fine.
 
-TODO(content): describe the other quality controls the same way. What stopped the drafts from
-being generic, and what a human actually reviewed before anything was published.
+The same principle runs through the rest. The model drafts; deterministic checks decide what
+ships. Anything that would embarrass a client if it were wrong is not left to a probability.
 
-### A rejected alternative
+### The alternative I rejected
 
-TODO(content). FR-C5 requires one, with the reason.
+One prompt, one article, straight to the CMS. It is the fastest thing to build and it is what
+the demo of this always looks like.
 
-### What it was not good at
+Rejected because the output is unusable at the point it matters. Generic copy that could be
+about any business does not sell anything, and links that resolve to nothing are worse than no
+links, because they damage the site they were meant to help. Almost all the value here is in the
+stages either side of generation, which is exactly the part the one-prompt version skips.
 
-Covered in the outcome section, and it needs to be honest. See FR-CP4.
+### Publishing into two systems
+
+Shopify and WordPress disagree about what a page is. Rather than fork the pipeline, publishing is
+the only stage that knows which target it is writing to, and everything upstream produces the
+same structured output regardless. Adding a client on a platform already supported does not mean
+writing a new pipeline.

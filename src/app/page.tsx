@@ -20,7 +20,7 @@ import { ManifestStrip, type ManifestRow } from '@/components/ManifestStrip';
 import { capabilityClusters } from '@/content/capabilities';
 import { getFlagship, getSupportingCaseStudies } from '@/content/case-studies/records';
 import { publications } from '@/content/publications';
-import { getRoles } from '@/content/roles';
+import { buildingSinceYear, getRoles } from '@/content/roles';
 import { siteConfig } from '@/content/site';
 import { personJsonLd } from '@/lib/jsonld';
 
@@ -220,7 +220,7 @@ function manifestRows(): ManifestRow[] {
     });
   }
 
-  rows.push({ key: 'Building since', value: '2020' });
+  rows.push({ key: 'Building since', value: buildingSinceYear() });
   rows.push({ key: 'Primary stack', value: 'Python · TypeScript · Go' });
   rows.push({
     key: 'Based',

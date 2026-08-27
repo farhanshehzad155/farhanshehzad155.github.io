@@ -304,14 +304,22 @@ It runs in three places: the `prebuild` hook, its own CI job (so the failure is 
 | CV-1 | Every `Metric` with tier `measured` or `counted` has a `basis` of ≥ 60 characters | Error | `<slug> → outcomes[i]: tier '<tier>' requires a basis ≥ 60 chars (found N). See PRD §6.4.` |
 | CV-1b | A `Metric` with tier `capability` has **no** digits in `value` | Error | Tier D permits no numbers (PRD §6.3) |
 | CV-1c | A `Metric` with tier `verifiable` has an `evidenceUrl` | Error | Tier A must carry its link |
-| CV-2 | Every `CaseStudy` has non-empty `contribution` and `whatDidNotWork` | Error | Names the empty field |
+| CV-2 | Every `CaseStudy` has a non-empty `contribution` | Error | Names the empty field |
+| CV-2b | Every `CaseStudy` has a `whatDidNotWork` | **Warning** | Only the person who built the system knows what went wrong, so this cannot be inferred. Blocking every build would have forced a fabrication; the section is omitted from the page instead |
 | CV-3 | Every `CaseStudy.constraints` has ≥ 2 entries | Error | Names the count found |
 | CV-5 | No content string contains a denylisted end-client name | Error | Names the term and the field, **never echoing the surrounding text** |
 | CV-6 | Exactly one `CaseStudy` has `featured: true` **and** a `liveUrl` | Error | Lists the offending slugs |
 | CV-7 | Every `CaseStudy.slug` has a matching MDX file and vice versa | Error | Names the orphan |
 | CV-8 | Slugs are unique and match `^[a-z0-9]+(-[a-z0-9]+)*$` | Error | Names the slug |
 | CV-9 | `readingMinutes` is between 3 and 12 | Warning | PRD FR-C9 targets 4–7 |
-| CV-10 | No `TODO(` marker remains in any content string | Warning (Error under `VALIDATE_STRICT=1`) | Lists field and marker |
+| CV-10 | No `TODO(` marker remains in any content string | Warning (Error under `--strict`) | Lists field and marker |
+| CV-15 | No role bullet carries a bare percentage or `N+` count | Warning | Closes the hole where a number in a plain string bypasses the `Metric` rules entirely. See below |
+
+**CV-15 closes a hole the original design missed.** Rules CV-1 and CV-1b police `Metric` objects, so a case study outcome cannot carry a number without a basis. But PRD §6.3 requires the qualifier *anywhere* a Tier B or C claim appears, and a role bullet is a plain string — it never touches the metric machinery.
+
+The consequence was concrete: a bullet reading "reduced effort by approximately 80%" shipped unqualified while the identical claim as a `Metric` would have failed the build. The site's three strongest numbers were the three sitting outside its strictest rule.
+
+CV-15 is a warning rather than an error because these are the owner's own claims about his own work, and failing his build over his CV copy would be the wrong instrument. What it does is make the gap impossible to forget: it prints on every run, names the role and the bullet, and says what supplying the basis would unlock.
 
 CV-5 deserves a note on its own implementation. The check is case-insensitive and matches on word boundaries, so "Acme" does not fire on "acmeism", and it is applied to every string field reachable from the content modules plus the raw text of every MDX file. Critically, **the error message names the term and the field but does not print the surrounding sentence** — CI logs are public on a public repository, and echoing the matched context would leak the very name the rule exists to suppress.
 
