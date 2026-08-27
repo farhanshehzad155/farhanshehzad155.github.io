@@ -27,7 +27,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # Required: build-meta reads per-file git dates for the footer and
           # sitemap lastmod. A shallow clone silently produces wrong dates.
