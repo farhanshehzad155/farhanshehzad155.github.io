@@ -1,0 +1,29 @@
+{/* FR-C5 approach narrative. Prose only — short fields, metrics and stack live in ../inventory-planning.ts */}
+
+### The model
+
+Current warehouse stock, plus projected demand over the manufacturing lead time, produces a
+requirement per product. TODO(content): expand into the real mechanics.
+
+### The forecasting method, stated plainly
+
+FR-IP2 is explicit about this section, and it is worth honouring rather than dressing up. If
+the projection was a moving average over recent sales with a buffer for lead time, that is what
+this section should say.
+
+A simple heuristic that the person placing the production order understands is worth more than
+a model they do not, because the simple one gets used and the sophisticated one gets overridden
+by a gut call. Describing a heuristic well is also a stronger signal to a reader than implying
+a machine learning system that was never there.
+
+TODO(content): write the real method.
+
+### A rejected alternative
+
+TODO(content). FR-C5 requires one, with the reason.
+
+### The adjacent price monitor
+
+FR-IP3: a competitor price-monitoring system was built alongside this — Python and Scrapy,
+scheduled in the cloud. TODO(content): a short paragraph on how the two related, if they did.
+Being clear that it was a separate build rather than part of the planner is the honest framing.

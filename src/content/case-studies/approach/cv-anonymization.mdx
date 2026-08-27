@@ -1,0 +1,41 @@
+{/* FR-C5 approach narrative. Prose only — short fields, metrics and stack live in ../cv-anonymization.ts */}
+
+The pipeline has two halves that are deliberately kept apart, and the separation is the whole
+design.
+
+### Understanding, then removal
+
+A CV is a layout problem before it is a text problem. The same name can appear as a heading, in
+an email address, in a file name, in a footer on every page, and in a sentence about a previous
+employer. A rules-only parser handles the predictable cases and misses the rest, because there
+are more layouts than anyone will enumerate.
+
+So the model reads the document and reports what it found and where. It does not edit anything.
+
+Removal is done by deterministic code against those locations. That ordering matters more than
+it might look. If the model performed the redaction, the output would be probabilistic: mostly
+right, occasionally wrong in a way nobody can predict or reproduce, and impossible to audit
+after the fact. With the split, every removal is a rule applied to a location, so it can be
+explained, re-run, and checked.
+
+TODO(Q7): expand with the real mechanics, at whatever level of detail Expinder permits.
+
+### Confidence and the human step
+
+TODO(Q7). FR-CV3 requires this section to cover what happens when extraction confidence is low
+and what the human review step does. The claim throughout is assisted automation, never full
+autonomy, and the page has to be consistent about that.
+
+### A rejected alternative
+
+TODO(Q7). The obvious one is having the model produce the redacted document directly — faster
+to build, and rejected for the auditability reason above. Write that up properly, along with
+anything else that was considered.
+
+### Data handling
+
+TODO(Q7). FR-CV6: GDPR relevance, retention, and where documents were processed, described
+without disclosing Expinder infrastructure.
+
+{/* FR-CV5: a synthetic before/after example goes here, clearly labelled as synthetic.
+    Rule C5 — invented data only. No real candidate material of any kind, ever. */}

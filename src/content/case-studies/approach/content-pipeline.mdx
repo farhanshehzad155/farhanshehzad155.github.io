@@ -1,0 +1,30 @@
+{/* FR-C5 approach narrative. Prose only — short fields, metrics and stack live in ../content-pipeline.ts */}
+
+### The chain
+
+Keyword research, topic generation, drafting, image generation, internal linking, publishing.
+Each stage hands structured output to the next rather than free text, so a failure is
+attributable to a stage instead of surfacing as a bad article at the end.
+
+TODO(content): expand.
+
+### The part that is not the model
+
+FR-CP2 exists because a reader in 2026 has seen a lot of AI content pipelines and assumes the
+worst. Fair enough. So this section has to be specific rather than reassuring.
+
+Internal linking is the clearest example. Asking a model to add internal links produces links
+that look right and point nowhere, because the model is predicting plausible URLs rather than
+consulting the site. The pipeline instead keeps its own index of pages that exist and links
+against that, so a link either resolves or is not inserted.
+
+TODO(content): describe the other quality controls the same way. What stopped the drafts from
+being generic, and what a human actually reviewed before anything was published.
+
+### A rejected alternative
+
+TODO(content). FR-C5 requires one, with the reason.
+
+### What it was not good at
+
+Covered in the outcome section, and it needs to be honest. See FR-CP4.

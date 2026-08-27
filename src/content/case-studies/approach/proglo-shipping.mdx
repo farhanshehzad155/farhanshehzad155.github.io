@@ -1,0 +1,40 @@
+{/* FR-C5 approach narrative. Prose only — short fields, metrics and stack live in ../proglo-shipping.ts */}
+
+TODO(Q1, Q2): this section is a skeleton. FR-PS4 requires it to cover, at minimum, the five
+areas below. Each heading is where the real narrative goes, and the whole page is gated on
+written permission from Proglo World LLC.
+
+### The Go service and its OpenAPI contract
+
+TODO. What the service was responsible for, and why the contract was written first. The
+public documentation route is the verifiable evidence here, so the description has to match
+what a reader finds when they open it.
+
+### Keeping the specification in sync with the implementation
+
+TODO. This is the part worth explaining properly. A specification that drifts from the
+implementation is worse than no specification, because integrators trust it. Say what
+mechanism kept them together and what it cost.
+
+### The Next.js front end and its rendering strategy
+
+TODO. Which rendering strategy, and what drove the choice. Name the rejected alternative and
+the reason (FR-C5).
+
+### Barcode generation and the warehouse workflow
+
+TODO. What the barcodes were for, where they were produced, and what the data processing
+around them had to handle.
+
+### The Apps Script build and release pipeline
+
+TODO. This is the most unusual piece of engineering in the case study and deserves the most
+space. TypeScript source, bundled, versioned, and deployed into Apps Script — a platform that
+does not expect any of those things. Explain what was hard about it, because that is what a
+reader will remember.
+
+### A rejected alternative
+
+TODO. FR-C5 requires at least one named alternative and the reason it was rejected. Without
+it this section describes what was built rather than why, which is the difference between a
+case study and a changelog.
