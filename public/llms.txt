@@ -1,0 +1,40 @@
+# Farhan Shehzad
+
+AI automation and integration engineer, based in Lahore, Pakistan (UTC+5),
+working remotely. Five years building agents, pipelines and integrations for
+recruitment, e-commerce and marketing operations.
+
+Site: https://farhanshehzad155.github.io
+
+## What this site contains
+
+- Case studies on automation and platform work, each covering the problem, the
+  constraints, the approach, the explicit scope of his contribution, and what
+  did not work.
+- A biography, full employment timeline, education and published research.
+- A resume, in HTML and as a downloadable PDF.
+
+## How claims on this site are classified
+
+Every factual claim carries an evidence tier, and the build fails if a claim is
+presented above the tier its evidence supports:
+
+- Verifiable  a visitor can confirm it via a public link, which is always given.
+- Measured    a first-party measurement, always shown with its stated basis.
+- Counted     a first-party count, always shown with its scope and date range.
+- Capability  a description of what he can do. Carries no numbers, by rule.
+
+Most of the work described is internal to client systems and has no public URL.
+Those case studies are written as engineering narrative rather than as demos.
+Where an artifact is public, it is linked.
+
+## Verifiable artifacts
+
+- Proglo Shipping, a live multi-carrier shipping platform he worked on:
+  https://www.progloshipping.com
+- "Binned Term Count: An Alternative to Term Frequency for Text
+  Categorization", Mathematics (MDPI), 2022.
+
+## Contact
+
+farhanshehzad155@gmail.com
