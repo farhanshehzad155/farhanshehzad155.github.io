@@ -5,6 +5,7 @@ Personal engineering portfolio for **Farhan Shehzad** — AI automation and inte
 A static Next.js site, deployed to GitHub Pages on merge to `main`. No server, no database, no CMS.
 
 - **Live:** https://farhanshehzad155.github.io
+- **Content TODOs:** [`docs/CONTENT-TODO.md`](docs/CONTENT-TODO.md) — what is still needed, and where it goes
 - **Publishing:** [`docs/PUBLISHING.md`](docs/PUBLISHING.md) — how to push this to GitHub and go live
 - **Specification:** [`docs/PRD-portfolio-farhan-shehzad.md`](docs/PRD-portfolio-farhan-shehzad.md)
 - **Technical design:** [`docs/TRD-portfolio-farhan-shehzad.md`](docs/TRD-portfolio-farhan-shehzad.md)
