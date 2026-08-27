@@ -42,3 +42,6 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# Generated at build time from git history (scripts/build-meta.ts)
+/src/generated/
