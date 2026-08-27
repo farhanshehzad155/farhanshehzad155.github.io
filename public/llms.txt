@@ -12,7 +12,7 @@ Site: https://farhanshehzad155.github.io
   constraints, the approach, the explicit scope of his contribution, and what
   did not work.
 - A biography, full employment timeline, education and published research.
-- A resume, in HTML and as a downloadable PDF.
+- A resume, as a page on this site rather than as a download.
 
 ## How claims on this site are classified
 

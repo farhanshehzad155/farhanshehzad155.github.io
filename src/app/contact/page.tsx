@@ -11,6 +11,7 @@
  */
 
 import type { Metadata } from 'next';
+import Link from 'next/link';
 
 import { CopyEmail } from '@/components/CopyEmail';
 import { ExternalLink } from '@/components/ExternalLink';
@@ -58,11 +59,8 @@ export default function ContactPage() {
       <section aria-labelledby="what-heading" className="mt-12 prose-measure">
         <h2 id="what-heading">What to send</h2>
         <p className="mt-4">
-          If you are hiring, the{' '}
-          <a href={siteConfig.resumePdfPath} download>
-            résumé
-          </a>{' '}
-          is a one-page PDF.
+          If you are hiring, the <Link href="/resume/">résumé</Link> is on this site rather than
+          behind a download. It prints cleanly if you need a file.
         </p>
         <p className="mt-4">
           If you are looking for contract help, tell me what the manual process currently costs

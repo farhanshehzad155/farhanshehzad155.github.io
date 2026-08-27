@@ -104,7 +104,6 @@ The site builds, deploys, and every route renders. The content is **structurally
 Launch also requires, and none of these exist yet:
 
 - **OG images.** Every page emits `og:image` tags pointing at `/og/*.png`, and those files are not generated yet — `scripts/generate-og.ts` is phase 4. Until it runs, social cards will show a broken image. This is the most visible of the gaps.
-- **The résumé PDF** (`FR-R2`). `/resume/` links to `/farhan-shehzad-resume.pdf`, which 404s until `npm run build:resume` exists and has been run.
 - The five SVG schematics (`FR-C5`), a contact-form provider (`FR-CT3`, TRD T2), an analytics provider (`FR-AN1`, TRD T1), and the manual NVDA and VoiceOver passes (`FR-AC10`).
 - The four remaining CI gates — axe, Lighthouse, link checking, and the no-JS pass — are specified in the workflow file as a commented block and are not yet wired.
 
@@ -137,7 +136,9 @@ That is the whole migration. `basePath` never enters the picture, because this d
 
 ---
 
-## Known deviation from the specification
+## Known deviations from the specification
+
+**FR-R2 dropped: there is no résumé PDF.** The site is the résumé. This leaves the P0 user story US-2 (recruiter downloads a PDF to attach to a submission) unmet; the print stylesheet is promoted to P0 as the mitigation. Owner decision, recorded as [ADR-011](docs/TRD-portfolio-farhan-shehzad.md).
 
 **NFR-6 is missed.** The PRD budgets 90 KB of gzipped JavaScript on the home page; the build ships ~104 KB, of which ~103 KB is the React and Next.js App Router runtime and ~1.4 KB is application code.
 

@@ -59,13 +59,11 @@ export default function HomePage() {
             <Link href="/work/" className="button button--primary tap-target">
               See the work
             </Link>
-            <a
-              href={siteConfig.resumePdfPath}
-              download
-              className="button button--secondary tap-target"
-            >
-              Download résumé
-            </a>
+            {/* The site is the résumé, so this goes to the page rather than to
+                a PDF download. See ADR-011. */}
+            <Link href="/resume/" className="button button--secondary tap-target">
+              Read the résumé
+            </Link>
           </div>
         </section>
 

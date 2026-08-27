@@ -88,9 +88,9 @@ Every PRD requirement ID maps to a place in the codebase. `P` is the PRD priorit
 |---|---|---|---|
 | FR-A1..A7 | P0/P1 | `src/app/about/page.tsx` over `roles.ts`, `education.ts`, `publications.ts`, `projects.ts` | 7.6 |
 | FR-R1 | P0 | `src/app/resume/page.tsx` renders from the same content modules — no second copy exists | 7.7 |
-| FR-R2 | P0 | `public/farhan-shehzad-resume.pdf` at a stable path | 10.4 |
-| FR-R3 | P1 | `@media print` block in `globals.css` | 6.8 |
-| FR-R4 | P1 | `scripts/generate-resume-pdf.ts` (Playwright print-to-PDF), with a documented manual fallback | 10.4 |
+| FR-R2 | P0 | **Dropped — see ADR-011.** No PDF; the site is the résumé | 10.4 |
+| FR-R3 | P1 | `@media print` block in `globals.css`. Promoted to P0: it is now the only route to a file | 6.8 |
+| FR-R4 | P1 | **Dropped with FR-R2** — nothing to generate | 10.4 |
 | FR-S1..S4 | P0/P1 | `src/content/capabilities.ts` — the type has no `proficiency` field, so FR-S1 cannot be violated | 4.2 |
 | FR-CT1..CT8 | P0/P1 | `src/app/contact/page.tsx` + `src/components/ContactForm.tsx` | 7.8 |
 
@@ -598,13 +598,13 @@ This is recorded as an ADR because the name `next/font/google` reads like a CDN 
 
 `display: 'swap'` and preload on the display and body faces; JetBrains Mono is not preloaded, since the manifest strip is below the LCP element.
 
-### 10.4 Résumé PDF (FR-R2, FR-R4)
+### 10.4 Résumé — no PDF (FR-R2 and FR-R4 dropped)
 
-`scripts/generate-resume-pdf.ts` serves the built `out/` directory, opens `/resume/` in headless Chromium via Playwright, and prints to PDF with the print stylesheet applied, writing `public/farhan-shehzad-resume.pdf`.
+There is no résumé PDF and no generator script. `/resume/` is the résumé, per the owner's decision on 28 Aug 2026 (**ADR-011**).
 
-ATS constraints from PRD Appendix C are properties of the résumé page's markup, not of the PDF step: single-column body, real text, standard headings, no layout tables, no text inside images. The generator sets the PDF metadata title and author (CV-P5).
+What carries the requirement instead is the print stylesheet (§6.8), which is consequently promoted from P1 to **P0**: it is now the only route from this site to a file. It must therefore satisfy the PRD Appendix C constraints directly — single column, real text, standard headings, no layout tables, no meaning carried by icons — because a browser print of `/resume/` is what a recruiter will attach to a submission.
 
-This script is **not** in `prebuild` — it needs a Playwright browser download, which would make a cold `npm install` heavy and could push CI past NFR-10. It is a separate `npm run build:resume`, run when résumé content changes, with the resulting PDF committed. The README documents this as a manual step with a version stamp, which is exactly the fallback FR-R4 permits.
+The ATS constraints were always properties of the page's markup rather than of the PDF step, so dropping the generator does not weaken them. What is lost is control over pagination and PDF metadata (CV-P5), neither of which a browser print exposes.
 
 ### 10.5 Schematics
 
@@ -1008,6 +1008,24 @@ This is not a surprise. PRD ADR-001 chose Next.js knowing the trade-off and wrot
 **Consequences.** The user-facing performance targets that actually matter — LCP, CLS, INP, and the Lighthouse score — are unaffected and remain at their PRD values; those are what a visitor experiences, and a static page with no blocking work meets them regardless. What is lost is the ability to claim a sub-90 KB page. What is kept is the framework the site exists to demonstrate.
 
 This requires a PRD amendment logged in PRD section 22. It is the one place where the implementation could not meet the specification as written, and it is recorded here rather than quietly satisfied by measuring something more flattering.
+
+### ADR-011 — No résumé PDF; the site is the résumé
+
+**Context.** PRD FR-R2 requires a downloadable one-page PDF at a stable path, and user story US-2 (P0) has the recruiter persona downloading it to attach to a submission. FR-R4 adds a generator script. On 28 Aug 2026 the owner decided against a PDF: the website itself is the résumé.
+
+**Decision.** Remove the PDF, the download buttons on the home, résumé and contact pages, the `resumePdfPath` field from `SiteConfig`, and the planned `scripts/generate-resume-pdf.ts`. The home page's secondary CTA becomes "Read the résumé", pointing at `/resume/`.
+
+**Consequences, stated plainly because this one has a real cost.**
+
+FR-R2 is a P0 requirement and US-2 is a P0 user story, and both are now unmet. Persona P1 — the technical recruiter who screens forty profiles a day — is described in the PRD as someone who "will not read a case study" and needs "a downloadable résumé". Agency and in-house recruiters frequently need a file to upload into an ATS, and asking them to print a web page adds friction at exactly the moment the PRD says attention is thinnest (30–90 seconds).
+
+Against that: a PDF is a second artifact that drifts from the site unless it is regenerated on every content change, and FR-R4's generator was already deferred to a manual step. A résumé that is wrong is worse than one that takes an extra click.
+
+**Mitigation.** The print stylesheet (§6.8) is promoted to P0 and must produce a clean, ATS-parseable document from `/resume/`. The page states "Print this page for a PDF copy" so the route is discoverable rather than assumed.
+
+**Revisit if** inbound recruiter contact underperforms the PRD §4.3 target of ≥8 qualified contacts in 90 days, or if a recruiter asks for a file. Restoring it is small: re-add `resumePdfPath`, generate the PDF from this page, restore the buttons.
+
+This requires a PRD amendment logged in PRD §22, alongside the NFR-6 amendment from ADR-010.
 
 ---
 

@@ -2,18 +2,20 @@
 
 Everything blocking `npm run validate:strict`, grouped by what is needed rather than by file.
 
-**62 markers across 16 files. 8 of 13 live pages currently display TODO text to visitors.**
+**Last updated 28 Aug 2026, after the titles-and-companies batch.**
 
-| Live page | Visible markers |
+32 distinct placeholder strings are readable by a visitor across 8 of the 13 live pages.
+
+| Live page | Visible placeholders |
 |---|---|
-| `/about/` | 19 |
-| `/work/cv-anonymization/` | 17 |
-| `/work/inventory-planning/` | 17 |
-| `/resume/` | 15 |
-| `/work/content-pipeline/` | 15 |
-| `/work/order-fulfillment/` | 15 |
-| `/work/proglo-shipping/` | 13 |
-| `/` (home) | 10 |
+| `/about/` | 7 |
+| `/work/proglo-shipping/` | 6 |
+| `/work/inventory-planning/` | 6 |
+| `/resume/` | 5 |
+| `/work/cv-anonymization/` | 5 |
+| `/work/content-pipeline/` | 5 |
+| `/work/order-fulfillment/` | 4 |
+| `/` (home) | 1 — Sadabyte only |
 
 Clean already: `/work/`, `/stack/`, `/contact/`, `/privacy/`, `404`.
 
@@ -23,31 +25,29 @@ Clean already: `/work/`, `/stack/`, `/contact/`, `/privacy/`, `404`.
 
 Fastest to answer, and they clear the most pages. **Start here.**
 
-### A1. Employment dates and titles — 12 markers, 5 roles
+### A1. Employment dates — PARTIALLY ANSWERED (28 Aug 2026)
 
-Every date in the repository is inferred, not verified. `roles.ts` says so in a header comment.
-These appear on `/about/`, `/resume/` and the home page.
+**Confirmed and applied:** company legal names, company LinkedIn pages, job titles, locations.
 
-For each role I need: **exact title**, **start month**, **end month**, **employment type**,
-**location**, and whether it was remote.
-
-| Role | Currently assumed | File |
+| Role | Title | Location |
 |---|---|---|
-| Expinder | AI Automation Engineer · Contract · 2026-01 → present · Remote | `src/content/roles.ts:25` |
-| LeadForge | Automation Engineer · Contract · 2024-01 → 2026-01 · Remote | `src/content/roles.ts:40` |
-| Proglo World | Full-Stack Engineer · Full-time · 2023-01 → 2026-01 · Remote | `src/content/roles.ts:55` |
-| Karmic Seed | Automation Engineer · Freelance · 2022-01 → 2024-01 · Remote | `src/content/roles.ts:73` |
-| Sadabyte | Software Engineer · Full-time · 2020-01 → 2022-01 · Lahore | `src/content/roles.ts:89` |
+| Expinder GmbH | AI Engineer | Düsseldorf, Germany |
+| LeadForge B.V. | AI Automation & Integration Engineer | Zoetermeer, Netherlands |
+| Proglo World LLC | Full Stack Developer | Las Vegas, NV |
+| Karmic Seed LLC | Automation & Integration Specialist | Clifton, NJ |
 
-Each role also needs a **one-line summary** (`oneLine`, shown on the home page) and
-**3–5 bullets** (`bullets`, shown on `/about/` and `/resume/`).
+**Still needed:**
 
-Sadabyte has **no real bullets at all** — `roles.ts:98` is the only bullet and it is a placeholder. It is the weakest
-entry on the site.
-
-The same dates are duplicated on each case study record (`period`), so I will sync them:
-`proglo-shipping.ts:24`, `cv-anonymization.ts:19`, `order-fulfillment.ts:16`,
-`content-pipeline.ts:15`, `inventory-planning.ts:15`.
+1. **Start and end months for all four**, as `YYYY-MM`. Not supplied. `getRoles()` sorts by
+   `start`, so the current placeholders also control the order the timeline renders in — wrong
+   dates mean a wrong order, not just wrong dates.
+2. **Employment type for three.** Expinder is Contract (stated in PRD §3.2). LeadForge, Proglo
+   and Karmic Seed are guesses: Contract, Full-time, Freelance respectively.
+3. **Sadabyte — everything.** Not in the list you sent, but named in PRD rule C1 and required
+   by FR-A2's five-role timeline. Currently a stub with one placeholder bullet.
+4. **Confirm `remote: true`** on all four. Inferred from you being in Lahore and the employers
+   being in Germany, the US and the Netherlands. Renders as "Düsseldorf, Germany · Remote".
+5. **Bullets for Sadabyte** — three to five, rewritten rather than pasted.
 
 ### A2. Publication identifiers — `src/content/publications.ts:17`
 
@@ -188,7 +188,6 @@ Not text, but they are launch blockers and two of them are visibly broken right 
 | Asset | Status | Blocks |
 |---|---|---|
 | **OG images** (`/og/*.png`) | Not generated. Every page emits `og:image` pointing at a 404, so any link you share shows a broken card. | FR-SEO4 |
-| **Résumé PDF** (`/farhan-shehzad-resume.pdf`) | Does not exist. The Download button on `/resume/` 404s. | FR-R2, `resume/page.tsx:69` |
 | **5 SVG schematics** | Not drawn. Each case study renders without one. | FR-C5 |
 | **Analytics provider** | Undecided — GoatCounter, Umami, or Plausible? | FR-AN1, TRD T1 |
 | **Contact form provider** | Undecided — Web3Forms or Formspree? | FR-CT3, TRD T2 |

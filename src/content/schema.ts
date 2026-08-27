@@ -107,6 +107,8 @@ export interface CaseStudy {
 
 export interface Role {
   company: string;
+  /** Public company page, so a reader can confirm the employer exists. */
+  companyUrl?: string;
   title: string;
   employmentType: 'Contract' | 'Full-time' | 'Part-time' | 'Freelance' | 'Internship';
   /** ISO YYYY-MM. */
@@ -187,7 +189,11 @@ export interface SiteConfig {
   availabilityNote: string;
   email: string;
   socials: SocialLink[];
-  resumePdfPath: string;
+  /**
+   * No `resumePdfPath`. The site itself is the résumé (see /resume/), so there
+   * is no PDF to link to. This is a deliberate deviation from PRD FR-R2 —
+   * see ADR-011.
+   */
   /** Optional portrait. Absent means a text-only header, never a placeholder (FR-A7). */
   photo?: { src: string; alt: string };
 }
@@ -268,6 +274,7 @@ export const caseStudySchema = z.object({
 
 export const roleSchema = z.object({
   company: z.string().min(1),
+  companyUrl: z.string().url().optional(),
   title: z.string().min(1),
   employmentType: z.enum(['Contract', 'Full-time', 'Part-time', 'Freelance', 'Internship']),
   start: isoMonth,
@@ -330,7 +337,6 @@ export const siteConfigSchema = z.object({
   availabilityNote: z.string(),
   email: z.string().email(),
   socials: z.array(socialLinkSchema),
-  resumePdfPath: z.string().startsWith('/'),
   photo: z.object({ src: z.string(), alt: z.string() }).optional(),
 });
 

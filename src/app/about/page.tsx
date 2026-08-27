@@ -69,7 +69,14 @@ export default function AboutPage() {
               >
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
                   <h3 className="m-0">
-                    {role.title}, {role.company}
+                    {role.title},{' '}
+                    {role.companyUrl ? (
+                      <ExternalLink href={role.companyUrl} showIndicator={false}>
+                        {role.company}
+                      </ExternalLink>
+                    ) : (
+                      role.company
+                    )}
                   </h3>
                   <p className="mono text-[var(--muted)] m-0">
                     {role.start} — {role.end}

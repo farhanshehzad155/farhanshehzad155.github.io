@@ -34,8 +34,6 @@ export const siteConfig: SiteConfig = {
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/farhanshehzad155' },
   ],
 
-  resumePdfPath: '/farhan-shehzad-resume.pdf',
-
   // FR-A7: a professional photograph, or no photograph. No placeholder avatar.
   // TODO(Q13): supply a photo or leave this undefined permanently.
 };

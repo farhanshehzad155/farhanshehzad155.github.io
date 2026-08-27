@@ -77,7 +77,7 @@ export const PAGE_DESCRIPTIONS = {
   home: 'AI automation and integration engineer. I design agents, pipelines and integrations for recruitment, e-commerce and marketing operations, and ship them to production.',
   work: 'Case studies on automation and platform work: what the problem was, what constrained the solution, what I decided and why, and what actually changed as a result.',
   about: 'How I moved from research on text categorisation into building AI automation and integrations, plus the full timeline, education and published work behind it.',
-  resume: 'One-page résumé for Farhan Shehzad, AI automation and integration engineer. Experience, stack, education and published research, with a downloadable PDF.',
+  resume: 'Résumé for Farhan Shehzad, AI automation and integration engineer: experience, stack, education and published research, on one page and readable without a download.',
   contact: 'Get in touch about an AI engineering role or contract automation work. Email is fastest, and I reply within two working days. LinkedIn and GitHub also listed.',
   stack: 'The tools I actually work with, grouped by what I use them for, with links to the case studies where each one was used. No proficiency bars, because they mean nothing.',
   privacy: 'What this site collects, which is very little: cookieless analytics, no tracking, and what the contact form provider receives when you send a message.',
