@@ -114,6 +114,24 @@ Merge to `main` → `.github/workflows/deploy.yml` → live in under three minut
 
 The full first-time checklist is in [TRD section 17.1](docs/TRD-portfolio-farhan-shehzad.md).
 
+### Branch protection
+
+`main` is protected by a repository ruleset, because merging to `main` deploys to the live site. Direct pushes are rejected. Every change goes through a pull request:
+
+```bash
+git switch -c my-change
+# ... edit, commit ...
+git push -u origin my-change
+gh pr create --fill
+# CI runs (~90s). Merge once the three checks are green.
+```
+
+The rules: no force-push, no branch deletion, a pull request is required (zero approvals — you can merge your own), and three checks must pass: `Types, lint, content`, `Build and export`, `Dependency audit`.
+
+Admin bypass is set to `pull_request` rather than `always`, and the difference is not cosmetic. Under `always`, a direct `git push` to `main` **succeeds** and merely prints the rule violations as a warning, which makes the whole ruleset advisory. Under `pull_request` the push is genuinely rejected, and the bypass only lets you merge a PR whose checks are failing — an emergency valve that still leaves a reviewable record.
+
+If CI is broken for an unrelated reason and something must ship, disable the ruleset in Settings → Rules, push, then re-enable it. Deliberate and visible beats a permanent hole.
+
 ### Rollback
 
 1. **Re-run the last good deployment** — Actions → the previous successful *Deploy* run → "Re-run all jobs". Fastest, but leaves `main` in the broken state.
