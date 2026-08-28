@@ -22,7 +22,10 @@
     "build:meta": "tsx scripts/build-meta.ts",
     "check:links": "tsx scripts/check-links.ts",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "predev": "npm run build:meta",
+    "pretypecheck": "npm run build:meta",
+    "pretest": "npm run build:meta"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",
@@ -57,5 +60,9 @@
     "last 2 Edge versions",
     "iOS >= 16",
     "Android >= 110"
-  ]
+  ],
+  "//overrides": "next 15.5 pins postcss 8.4.31, which carries GHSA-qx2v-qp2m-jg93 (high) and three sourceMappingURL path-traversal advisories, all fixed in 8.5.23+. Pinned forward here rather than taking the next 16 major that `npm audit fix --force` wanted, which is a breaking change this site has no other reason to make. Remove once next ships a postcss >= 8.5.23.",
+  "overrides": {
+    "postcss": "^8.5.26"
+  }
 }
