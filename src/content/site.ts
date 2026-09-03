@@ -12,9 +12,9 @@ export const siteConfig: SiteConfig = {
   // Appendix A.1, recommended option 1 for the h1.
   heroHeadline: 'I build the systems that do the repetitive work.',
   heroSubhead:
-    'AI automation and integration engineer. I design agents, pipelines and integrations for recruitment, e-commerce and marketing operations, from requirements through to the part where it runs unattended.',
+    'AI automation and integration engineer. I design agents, pipelines and integrations for e-commerce and marketplace operations, recruitment and marketing, from requirements through to the part where it runs unattended.',
   heroSupporting:
-    'Python, TypeScript and Go. Currently building recruitment AI at Expinder, remotely from Lahore.',
+    'Python, TypeScript, Go and n8n. Currently building recruitment AI at Expinder, remotely from Lahore.',
 
   location: 'Lahore, Pakistan',
   timezone: 'UTC+5',
@@ -60,6 +60,7 @@ export const workIndexIntro =
 export const aboutBio: string[] = [
   'I started in research. My MPhil work was on text categorisation, specifically on a term weighting method that reduces the bias long documents introduce into classification, which ended up published in Mathematics in 2022. Somewhere in the middle of that I noticed I enjoyed the plumbing more than the models: getting data out of one system, into a shape something else could use, reliably, at three in the morning without anyone watching.',
   'That turned into automation work. It started with e-commerce operations. Order validation, carton selection, shipping labels, inventory planning, price monitoring: the sort of work that is nobody’s job and everybody’s afternoon. Then integration work across whatever a client already ran on, which usually meant some combination of Amazon, Shopify, ShipStation and a carrier or two. Most of it was one problem wearing different clothes. Two systems that were never designed to talk to each other, a person in between doing the translation by hand, and a business quietly paying for that person’s time.',
+  'The surface of that work is wider than the word automation suggests. Order and inventory management, fulfillment and shipping, customer and vendor operations, reconciliation, reporting: the operational spine of a business that sells online. Amazon through the Selling Partner API, Amazon Ads, Walmart Marketplace, Shopify and ShipStation are mostly just where that spine happens to live.',
   'Around the point language models became reliable enough to put in a pipeline, the interesting part of the job changed. The question stopped being whether something could be automated and became which part a model should do and which part has to stay deterministic. I care about that line more than almost anything else in my work. In the CV anonymization pipeline I build at Expinder, a model reads the document and reports where a person is identified; deterministic rules perform the actual removal. That split is the design, and it is what makes the result auditable rather than merely usually right.',
   'In between, I spent a stretch on product engineering rather than automation: full-stack work on a live shipping platform in Next.js, TypeScript and Go, including the REST APIs and the OpenAPI contract underneath them. That period is why I would rather agree the interface contract before writing the implementation, and why I am comfortable owning something from architecture through to the part where it runs unattended.',
   'What I like is a problem where the manual process is well understood, expensive and dull, and where the real work is not the automation but deciding what is safe to automate, what stays in front of a person, and how the thing behaves when it fails. I am based in Lahore and work remotely.',

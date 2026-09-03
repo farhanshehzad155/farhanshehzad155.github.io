@@ -13,6 +13,7 @@ import { cvAnonymization } from './cv-anonymization';
 import { orderFulfillment } from './order-fulfillment';
 import { contentPipeline } from './content-pipeline';
 import { inventoryPlanning } from './inventory-planning';
+import { productDataEnrichment } from './product-data-enrichment';
 
 export const caseStudies: CaseStudy[] = [
   progloShipping,
@@ -20,6 +21,7 @@ export const caseStudies: CaseStudy[] = [
   orderFulfillment,
   contentPipeline,
   inventoryPlanning,
+  productDataEnrichment,
 ];
 
 /**

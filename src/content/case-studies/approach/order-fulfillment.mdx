@@ -10,6 +10,22 @@ a person rather than failing the whole run. An address that will not validate is
 problem from a carrier that timed out, and treating them the same way means somebody has to
 work out which one happened before they can do anything about it.
 
+### Routine and exception are different paths
+
+Before any of it was automated the existing workflow was written down, step by step, as people
+were actually performing it rather than as anyone believed it worked. That is the boring part and
+it decides everything after it, because automating a process nobody has described accurately
+produces a fast version of the wrong process.
+
+What came out of it was a split. An order that validates, packs into a stocked carton and rates
+successfully never needs a person and never gets one. An order that fails any of those is held,
+with the reason attached, on a path meant for human attention.
+
+The distinction is worth being precise about, because "automated fulfillment" is usually claimed
+to mean nobody touches anything. It does not mean that here. It means the volume of orders a
+person handles stops scaling with the volume of orders the business receives, and what reaches
+them is the set of things that genuinely need a decision.
+
 ### Why the box is the interesting decision
 
 Carriers do not bill on weight alone. They bill on dimensional weight, a function of the box's

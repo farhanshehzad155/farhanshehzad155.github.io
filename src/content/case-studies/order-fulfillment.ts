@@ -1,7 +1,10 @@
 /**
  * PRD section 8.4.3. E-commerce fulfillment automation.
  *
- * Drawn from Farhan's own Karmic Seed role bullets, supplied 28 Aug 2026.
+ * Drawn from Farhan's own Karmic Seed role bullets, supplied 28 Aug 2026, and
+ * extended 3 Sep 2026 with the routing decision he described: the workflow was
+ * mapped first, then split so routine orders complete unattended and only the
+ * exceptions reach a person.
  *
  * The ~80% figure from the role bullet is NOT reproduced as an outcome metric:
  * rule CV-1 requires a stated basis for a Tier B claim and none exists yet
@@ -14,7 +17,7 @@ export const orderFulfillment: CaseStudy = {
   slug: 'order-fulfillment',
   title: 'Order fulfillment automation',
   summary:
-    'A pipeline that validates incoming orders, picks a carton by volumetric weight, then rates and generates the shipping label across several carriers.',
+    'A pipeline that validates incoming orders, picks a carton by volumetric weight, then rates and generates the shipping label across several carriers, routing only the exceptions to a person.',
   metaDescription:
     'Automating e-commerce fulfillment: order validation, volumetric-weight carton selection, and multi-carrier rate and label generation across Amazon and Shopify.',
   organisation: 'Karmic Seed LLC',
@@ -31,19 +34,32 @@ export const orderFulfillment: CaseStudy = {
 
   // FR-OF2: carton selection is the technical centrepiece.
   contribution:
-    'I built the pipeline end to end: order ingestion and validation across both sales channels, the carton selection step, and the carrier integrations for rating and label generation. The part worth explaining is carton selection. Carriers bill on dimensional weight as well as actual weight, and charge whichever is greater, so the box you choose changes what a shipment costs regardless of what is inside it. Selection has to satisfy several things at once: the items must physically fit, the box has to be one the warehouse actually stocks, the dimensions must stay under the carrier’s oversize thresholds, and among the boxes that qualify it should pick the one that rates cheapest for that destination. That makes it a small packing problem rather than a lookup.',
+    'I built the pipeline end to end: order ingestion and validation across both sales channels, the carton selection step, and the carrier integrations for rating and label generation. The part worth explaining is carton selection. Carriers bill on dimensional weight as well as actual weight, and charge whichever is greater, so the box you choose changes what a shipment costs regardless of what is inside it. Selection has to satisfy several things at once: the items must physically fit, the box has to be one the warehouse actually stocks, the dimensions must stay under the carrier’s oversize thresholds, and among the boxes that qualify it should pick the one that rates cheapest for that destination. That makes it a small packing problem rather than a lookup. The other decision worth stating is what happens to the orders that do not go cleanly. I mapped the existing workflow before automating any of it, then split it: an order that validates, packs and rates without incident completes unattended, and anything that does not — a failed address, an item that fits no stocked carton, a carrier that will not answer — is held with the reason attached and routed to a person. The aim was never to remove the human. It was to make the exceptions the only thing they see.',
 
   constraints: [
     'Two sales channels with different data shapes and different guarantees about address quality, feeding one pipeline.',
     'Carrier APIs are external and they fail. Rate limits, timeouts and bad responses have to be absorbed without dropping a shipment or buying a second label for one that already has one.',
     'A finite set of real carton sizes actually held in the warehouse. The theoretically optimal box does not help if it is not on the shelf.',
     'The output is a physical label on a physical parcel, so a mistake is not a retry. It is a return.',
+    'Volume grows and the manual process does not scale with it, so the split between what completes automatically and what a person sees had to hold as order counts rose rather than quietly sending everything to review.',
   ],
 
   outcomes: [
     {
       value: '',
       label: 'Turned a per-order manual sequence into an automated run with a review step.',
+      tier: 'capability',
+    },
+    {
+      value: '',
+      label:
+        'Routine orders complete without anyone touching them, while exceptions are held with the reason attached, so a person handles the decisions rather than the process.',
+      tier: 'capability',
+    },
+    {
+      value: '',
+      label:
+        'The workflow was mapped before it was automated, so the steps that were standardised are the ones that were actually being performed.',
       tier: 'capability',
     },
     {

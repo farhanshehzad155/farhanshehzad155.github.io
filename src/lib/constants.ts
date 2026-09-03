@@ -37,7 +37,7 @@ export const SITE_URL = 'https://farhanshehzad155.github.io';
  *
  * `npm run validate:strict` still reports warnings, and none of them are
  * reasons to stay out of the index. They are quality gaps rather than
- * inaccuracies: five case studies have no "what did not work" section, and
+ * inaccuracies: six case studies have no "what did not work" section, and
  * three role bullets carry a number without its measured basis (rule CV-15).
  * The second of those is worth closing soon — see PRD Q4, Q5 and Q6.
  *

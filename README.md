@@ -93,7 +93,7 @@ Every page carries real content. No placeholder text renders anywhere, dates and
 | Rule | Count | What it means |
 |---|---|---|
 | `CV-15` | 3 | Three role bullets carry a number — two `~80%` and one `50+` — without the measured basis PRD §6.3 requires. **This is the one worth closing.** Supply what was sampled, before and after, and over what period (PRD Q4, Q5, Q6), and the numbers move into the case study outcomes where they render with a footnote and the build can enforce them. |
-| `CV-2b` | 5 | No case study has a "what did not work" section (FR-C7). It cannot be inferred — only the person who built the thing knows — so the section is omitted rather than fabricated. It is what a hiring engineer looks for, and its absence is the biggest single weakness on the site. |
+| `CV-2b` | 6 | None of the six case studies has a "what did not work" section (FR-C7). It cannot be inferred — only the person who built the thing knows — so the section is omitted rather than fabricated. It is what a hiring engineer looks for, and its absence is the biggest single weakness on the site. |
 
 Still outstanding, and not blocking:
 

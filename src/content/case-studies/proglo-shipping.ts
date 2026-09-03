@@ -46,7 +46,7 @@ export const progloShipping: CaseStudy = {
 
   // FR-PS2 / FR-C6. Rendered directly under the header, not buried at the end.
   contribution:
-    'This is a team product and I did not build it alone. I worked on specific parts of it: full-stack development in Next.js, TypeScript and Go; designing, building and documenting the REST APIs in Go against an OpenAPI (Swagger) contract; barcode generation and the warehouse data-processing workflows around it; and the Google Workspace automation, written in TypeScript on Apps Script, together with the build, bundling, deployment and release tooling for it. I also handled Google Workspace administration, including domain configuration and user provisioning. Product direction, carrier relationships and the rest of the platform are the team’s work, not mine.',
+    'This is a team product and I did not build it alone. I worked on specific parts of it: full-stack development in Next.js, TypeScript and Go; designing, building and documenting the REST APIs in Go against an OpenAPI (Swagger) contract; barcode generation and the warehouse data-processing workflows around it, together with the internal tools the warehouse team used day to day for shipping-label creation and the shipping operations around it; and the Google Workspace automation, written in TypeScript on Apps Script, together with the build, bundling, deployment and release tooling for it. I also handled Google Workspace administration, including domain configuration and user provisioning. Product direction, carrier relationships and the rest of the platform are the team’s work, not mine.',
 
   constraints: [
     'A live product with paying merchants. Label generation sits on the critical path of somebody shipping an order, so changes could not trade availability for elegance.',
@@ -74,7 +74,7 @@ export const progloShipping: CaseStudy = {
     {
       value: '',
       label:
-        'Warehouse operations automated through barcode generation and data processing, replacing manual inventory steps.',
+        'Warehouse operations automated through barcode generation and data processing, replacing manual inventory steps, with internal tooling for the label creation the team performs every day.',
       tier: 'capability',
     },
     {

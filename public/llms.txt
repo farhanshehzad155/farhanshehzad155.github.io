@@ -1,8 +1,12 @@
 # Farhan Shehzad
 
 AI automation and integration engineer, based in Lahore, Pakistan (UTC+5),
-working remotely. Five years building agents, pipelines and integrations for
-recruitment, e-commerce and marketing operations.
+working remotely. Builds agents, pipelines and integrations for e-commerce and
+marketplace operations, recruitment and marketing: order and inventory
+management, fulfillment and shipping, document pipelines, content production,
+and the API integrations underneath them. The employment timeline on this site
+runs from 2022 across four employers in Germany, the Netherlands and the
+United States.
 
 Site: https://farhanshehzad155.github.io
 
