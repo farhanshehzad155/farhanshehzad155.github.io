@@ -75,7 +75,6 @@ export const capabilityClusters: CapabilityCluster[] = [
     tools: [
       'Python',
       'FastAPI',
-      'Go',
       'Node.js',
       'TypeScript',
       'OpenAPI/Swagger',

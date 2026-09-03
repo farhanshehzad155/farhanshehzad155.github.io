@@ -7,6 +7,11 @@
  * day. Nothing here describes Proglo internals, customer data, order data or
  * private endpoints (FR-PS5, rule C5).
  *
+ * The implementation language of the API services is deliberately not named
+ * here or anywhere else on the site. Removed at Farhan's request on 3 Sep 2026.
+ * The API work, the OpenAPI contract and the ownership scope are unchanged and
+ * still true; only the language is gone. Do not reinstate it as a tidy-up.
+ *
  * FR-PS6 fallback, if the company later objects to being named:
  *   - retitle to 'Multi-carrier shipping platform'
  *   - set `organisation` to 'A US-based multi-carrier shipping platform'
@@ -21,9 +26,9 @@ export const progloShipping: CaseStudy = {
   slug: 'proglo-shipping',
   title: 'Proglo Shipping',
   summary:
-    'Full-stack and API work on a live multi-carrier shipping platform: Go services behind an OpenAPI contract, a Next.js front end, and the warehouse and Workspace automation around them.',
+    'Full-stack and API work on a live multi-carrier shipping platform: REST services behind an OpenAPI contract, a Next.js front end, and the warehouse and Workspace automation around them.',
   metaDescription:
-    'Go APIs behind an OpenAPI contract, a Next.js front end, barcode warehouse workflows and Apps Script release tooling on a live multi-carrier shipping platform.',
+    'REST APIs behind an OpenAPI contract, a Next.js front end, barcode warehouse workflows and a real Apps Script release pipeline on a live shipping platform.',
   organisation: 'Proglo World LLC',
   role: 'Full Stack Developer',
   period: { start: '2024-10', end: '2026-02' },
@@ -46,7 +51,7 @@ export const progloShipping: CaseStudy = {
 
   // FR-PS2 / FR-C6. Rendered directly under the header, not buried at the end.
   contribution:
-    'This is a team product and I did not build it alone. I worked on specific parts of it: full-stack development in Next.js, TypeScript and Go; designing, building and documenting the REST APIs in Go against an OpenAPI (Swagger) contract; barcode generation and the warehouse data-processing workflows around it, together with the internal tools the warehouse team used day to day for shipping-label creation and the shipping operations around it; and the Google Workspace automation, written in TypeScript on Apps Script, together with the build, bundling, deployment and release tooling for it. I also handled Google Workspace administration, including domain configuration and user provisioning. Product direction, carrier relationships and the rest of the platform are the team’s work, not mine.',
+    'This is a team product and I did not build it alone. I worked on specific parts of it: full-stack development in Next.js and TypeScript; designing, building and documenting the REST APIs against an OpenAPI (Swagger) contract; barcode generation and the warehouse data-processing workflows around it, together with the internal tools the warehouse team used day to day for shipping-label creation and the shipping operations around it; and the Google Workspace automation, written in TypeScript on Apps Script, together with the build, bundling, deployment and release tooling for it. I also handled Google Workspace administration, including domain configuration and user provisioning. Product direction, carrier relationships and the rest of the platform are the team’s work, not mine.',
 
   constraints: [
     'A live product with paying merchants. Label generation sits on the critical path of somebody shipping an order, so changes could not trade availability for elegance.',
@@ -68,7 +73,7 @@ export const progloShipping: CaseStudy = {
     {
       value: '',
       label:
-        'REST APIs in Go documented against an OpenAPI contract, so integrators build against a written specification rather than against observed behaviour.',
+        'REST APIs documented against an OpenAPI contract, so integrators build against a written specification rather than against observed behaviour.',
       tier: 'capability',
     },
     {
@@ -90,11 +95,6 @@ export const progloShipping: CaseStudy = {
   // omitting it. This is the biggest remaining gap in the case study.
 
   stack: [
-    {
-      name: 'Go',
-      rationale:
-        'For the API services: static typing and a small deployment footprint on the part of the system that had to stay predictable under carrier-API latency.',
-    },
     {
       name: 'OpenAPI / Swagger',
       rationale:
