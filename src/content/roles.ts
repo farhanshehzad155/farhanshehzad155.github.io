@@ -75,8 +75,8 @@ export const roles: Role[] = [
     remote: true,
     oneLine: 'Full-stack and API work on a live multi-carrier shipping platform.',
     bullets: [
-      'Built full-stack web applications in Next.js, TypeScript and Go supporting business operations and automation workflows.',
-      'Designed, built and documented REST APIs in Go against an OpenAPI (Swagger) contract, so internal and third-party integrations had something reliable to build against.',
+      'Built full-stack web applications in Next.js and TypeScript supporting business operations and automation workflows.',
+      'Designed, built and documented REST APIs against an OpenAPI (Swagger) contract, so internal and third-party integrations had something reliable to build against.',
       'Built Google Workspace automation in Google Apps Script and TypeScript for operational workflows and data processing.',
       'Maintained the TypeScript toolchain around those Apps Script projects, including build, bundling, deployment and release.',
       'Automated warehouse operations through barcode generation, data processing and inventory workflow improvements.',

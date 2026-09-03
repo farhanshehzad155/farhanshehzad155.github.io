@@ -1,13 +1,13 @@
 {/* FR-C5 approach narrative. Prose only — short fields, metrics and stack live in ../proglo-shipping.ts */}
 
-### The Go service and its OpenAPI contract
+### The API service and its OpenAPI contract
 
 The API is public, which changes how you build it. An internal endpoint can be reshaped the
 afternoon somebody needs it reshaped. A documented one that third parties integrate against
 cannot, because breaking it breaks somebody else's system without warning them.
 
 So the contract came first. The OpenAPI specification is what the front end and any external
-integrator build against, and the Go implementation is held to it rather than the other way
+integrator build against, and the implementation is held to it rather than the other way
 round. That ordering costs a little at the start and saves the argument about what the API
 actually does every time after.
 

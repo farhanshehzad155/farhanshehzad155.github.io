@@ -221,7 +221,7 @@ function manifestRows(): ManifestRow[] {
   }
 
   rows.push({ key: 'Building since', value: buildingSinceYear() });
-  rows.push({ key: 'Primary stack', value: 'Python · TypeScript · Go' });
+  rows.push({ key: 'Primary stack', value: 'Python · TypeScript · n8n' });
   rows.push({
     key: 'Based',
     value: `${siteConfig.location} — ${siteConfig.timezone}`,
