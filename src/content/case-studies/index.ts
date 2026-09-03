@@ -19,6 +19,7 @@ import CvAnonymizationApproach from './approach/cv-anonymization.mdx';
 import OrderFulfillmentApproach from './approach/order-fulfillment.mdx';
 import ContentPipelineApproach from './approach/content-pipeline.mdx';
 import InventoryPlanningApproach from './approach/inventory-planning.mdx';
+import ProductDataEnrichmentApproach from './approach/product-data-enrichment.mdx';
 
 export * from './records';
 
@@ -33,4 +34,5 @@ export const approachBodies: Record<string, ComponentType> = {
   'order-fulfillment': OrderFulfillmentApproach,
   'content-pipeline': ContentPipelineApproach,
   'inventory-planning': InventoryPlanningApproach,
+  'product-data-enrichment': ProductDataEnrichmentApproach,
 };

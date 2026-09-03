@@ -7,6 +7,18 @@
  * being in Lahore while all four employers are in Germany, the Netherlands and
  * the United States.
  *
+ * Extended 3 Sep 2026 from a further account of the same work: the marketplace
+ * APIs named precisely (SP-API, Amazon Ads, Walmart Marketplace), the exception
+ * split in the Karmic Seed fulfillment workflow, the product data enrichment
+ * and product relationship work at LeadForge, and the warehouse-facing tooling
+ * at Proglo.
+ *
+ * NOT recorded here: '6+ years of professional operations experience'. The
+ * earliest role below starts 2022-07, and `buildingSinceYear()` derives the
+ * site's 'Building since' row from it, so the claim would sit next to a
+ * timeline that shows four. Whatever ran from roughly 2019 to 2022 has to
+ * appear here as a role before the number can be stated anywhere.
+ *
  * ---------------------------------------------------------------------------
  * NOTE ON THE THREE NUMBERS IN THESE BULLETS
  *
@@ -68,6 +80,7 @@ export const roles: Role[] = [
       'Built Google Workspace automation in Google Apps Script and TypeScript for operational workflows and data processing.',
       'Maintained the TypeScript toolchain around those Apps Script projects, including build, bundling, deployment and release.',
       'Automated warehouse operations through barcode generation, data processing and inventory workflow improvements.',
+      'Built internal tools and workflows for the warehouse team, covering shipping-label creation and the day-to-day shipping operations around it.',
       'Ran Google Workspace administration: domain configuration, user provisioning and operational setup.',
     ],
     caseStudySlugs: ['proglo-shipping'],
@@ -85,15 +98,17 @@ export const roles: Role[] = [
     oneLine: 'Automation and AI delivery for international clients across e-commerce, SaaS and marketing operations.',
     bullets: [
       'Delivered 50+ automation and AI solutions for international clients, turning business requirements into workflow, integration and automation systems.',
-      'Designed AI-powered workflows for content generation, lead generation, data enrichment and process optimisation.',
-      'Built e-commerce automation covering order processing, inventory workflows, data synchronisation and operational reporting.',
+      'Designed AI-powered workflows for content generation, lead generation, outreach, data enrichment and process optimisation.',
+      'Built e-commerce automation covering order processing, inventory workflows, shipping and fulfillment tasks, data synchronisation and operational reporting.',
+      'Built product data enrichment workflows in n8n that extract attributes from unstructured product descriptions with an LLM, validate them, and write the accepted attributes back to the store.',
+      'Derived product families and co-purchase relationships from sales and view patterns, and used them to generate cross-selling and product recommendation suggestions.',
       'Built API integrations over REST, OAuth 2.0 and webhooks across e-commerce, SaaS and business platforms.',
       'Built web data extraction systems in Python, Scrapy and Selenium for structured collection and processing.',
-      'Integrated the Amazon, Shopify, ShipStation and Walmart APIs to synchronise e-commerce operations.',
+      'Integrated the Amazon Selling Partner API (SP-API), Amazon Ads, Walmart Marketplace, Shopify and ShipStation to synchronise e-commerce, shipping and fulfillment operations.',
       'Built and shipped Google Workspace Add-ons to extend client business workflows.',
       'Processed and reshaped large datasets for operational workflows, analytics and downstream integrations.',
     ],
-    caseStudySlugs: ['content-pipeline'],
+    caseStudySlugs: ['content-pipeline', 'product-data-enrichment'],
   },
   {
     company: 'Karmic Seed LLC',
@@ -108,10 +123,11 @@ export const roles: Role[] = [
     oneLine: 'E-commerce operations automation: fulfillment, inventory planning, advertising and price monitoring.',
     bullets: [
       'Reduced order fulfillment effort by approximately 80% by automating order validation, volumetric-weight carton selection and shipping label generation across Amazon and Shopify orders.',
+      'Mapped the order-to-fulfillment workflow and split it in two: routine orders run through automatically, while orders needing a decision are held back for review, so the exceptions are the only thing a person handles.',
       'Built an inventory planning workflow that turns warehouse stock levels and projected demand into upcoming manufacturing requirements, replacing a manual planning step.',
       'Automated Amazon Ads campaign scheduling and execution by joining Google Sheets, Google Apps Script and the Amazon Ads API.',
       'Built a cloud-scheduled competitor price monitoring system in Python and Scrapy to track marketplace pricing and inform pricing decisions.',
-      'Built API integrations and data workflows across Amazon Seller Central, Amazon Ads, Shopify, FedEx, DHL and ShipStation.',
+      'Built API integrations and data workflows across the Amazon Selling Partner API (SP-API), Amazon Ads, Shopify, FedEx, DHL and ShipStation.',
     ],
     caseStudySlugs: ['order-fulfillment', 'inventory-planning'],
   },

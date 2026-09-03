@@ -2,7 +2,8 @@
 
 ### The chain
 
-Keyword research, topic generation, drafting, image generation, internal linking, publishing.
+Topic research, keyword discovery, SEO keyword analysis, drafting, internal linking, image generation,
+image classification and processing, publishing.
 
 Each stage hands structured output to the next rather than free text. That is not a stylistic
 preference: it means a failure is attributable to a stage instead of surfacing as a bad article
@@ -31,6 +32,27 @@ Rejected because the output is unusable at the point it matters. Generic copy th
 about any business does not sell anything, and links that resolve to nothing are worse than no
 links, because they damage the site they were meant to help. Almost all the value here is in the
 stages either side of generation, which is exactly the part the one-prompt version skips.
+
+### Choosing what to write about
+
+This is the stage most content pipelines skip, and skipping it is why so much of their output
+reads as filler. Ask a model for article ideas about a store and it returns ten titles that would
+suit any store selling anything in that category.
+
+So topic selection is constrained by things outside the model: questions customers actually ask,
+questions the products themselves raise, comparisons between items the store genuinely stocks,
+and subjects with commercial intent rather than subjects that merely sound relevant. The keyword
+analysis narrows that further to what people search for.
+
+The effect is that an article has a reason to exist before a word of it is written, and the
+internal linking stage has somewhere real to point, because the subject was drawn from the
+catalogue in the first place.
+
+### Images are checked, not just generated
+
+Generated imagery is classified and processed before it is attached rather than dropped in as it
+comes back. An image that does not match the article is the fastest way for a reader to work out
+that nobody looked at the page, and it undoes the credibility of text that may be perfectly good.
 
 ### Publishing into two systems
 

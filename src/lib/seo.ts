@@ -74,7 +74,7 @@ export function buildMetadata({
  * tone in one place (FR-SEO2, rule CV-11).
  */
 export const PAGE_DESCRIPTIONS = {
-  home: 'AI automation and integration engineer. I design agents, pipelines and integrations for recruitment, e-commerce and marketing operations, and ship them to production.',
+  home: 'AI automation and integration engineer. I design agents, pipelines and integrations for e-commerce and marketplace operations, recruitment and marketing, and ship them to production.',
   work: 'Case studies on automation and platform work: what the problem was, what constrained the solution, what I decided and why, and what actually changed as a result.',
   about: 'How I moved from research on text categorisation into building AI automation and integrations, plus the full timeline, education and published work behind it.',
   resume: 'Résumé for Farhan Shehzad, AI automation and integration engineer: experience, stack, education and published research, on one page and readable without a download.',

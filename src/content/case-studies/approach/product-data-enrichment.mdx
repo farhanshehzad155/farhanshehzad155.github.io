@@ -1,0 +1,57 @@
+{/* FR-C5 approach narrative. Prose only — short fields, metrics and stack live in ../product-data-enrichment.ts */}
+
+### Two steps that are usually one
+
+Read the description, produce the attributes. Most implementations of this are a single call, and
+that single call is where the whole thing goes wrong.
+
+Here it is split. Extraction proposes; validation accepts. The model reads a description and
+returns candidate attribute values against the vocabulary defined for that category. A separate
+deterministic stage then decides whether each one is allowed through: is it the right type, does
+the unit make sense, is the value inside the permitted set for that attribute, and is the claim
+supported by text that was actually in the source.
+
+The split matters because the two steps fail differently. Extraction fails softly — it produces
+something plausible. Validation fails loudly, and can be pointed at a specific field. Keeping
+them separate is what makes a wrong attribute a caught error rather than a published one.
+
+### Absence has to be a value
+
+The failure mode specific to this problem is that a model asked for a shape will fill the shape.
+Ask for `capacity` and it returns a capacity, whether or not the description mentioned one.
+
+So nothing in the pipeline treats a missing attribute as a problem to be solved. An attribute
+that is not supported by the source is dropped, and the product simply does not carry it. A
+catalogue where sixty per cent of products have a verified material and the rest have none is
+more useful than one where every product has a material and some proportion of them are invented,
+because the second one cannot be filtered on with any confidence.
+
+### Vocabulary per category, not per catalogue
+
+Attributes are not universal. What matters about a lens is not what matters about a supplement,
+and the two stores did not agree on names for the attributes they did share.
+
+Rather than one schema across everything, each category carries its own attribute vocabulary, and
+that vocabulary is what both the extraction prompt and the validation stage are built against.
+Adding a category means describing its attributes, not modifying the pipeline.
+
+### The alternative I rejected
+
+One call per product: description in, complete attribute object out, straight into the store. It
+is a morning's work and it demonstrates beautifully.
+
+I rejected it because it has no way of being wrong. There is no point at which the pipeline can
+say it did not find something, so the only signal that an attribute is fabricated is a customer
+noticing that a product page is lying to them. On a catalogue of a few dozen products a person
+can spot-check the output and that risk is manageable. At the scale that makes the automation
+worth building, nobody is checking, and an unverifiable attribute is worse than an empty field
+because the store now believes it.
+
+### The relationships are a separate problem
+
+Grouping products into families and finding which products are bought or viewed together is not
+document understanding at all — it is reading sales and view data and looking for co-occurrence.
+It shares a home with the enrichment work because it feeds the same surfaces, the product page and
+the recommendations, but no model is deciding what is related to what. The suggestions come from
+what customers actually did, which is both cheaper and considerably easier to defend when a store
+owner asks why two products are shown together.
